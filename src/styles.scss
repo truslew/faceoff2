@@ -1,0 +1,110 @@
+$aibk-red: rgb(182,50,51);
+$aibk-dark-red: rgb(146,41,42);
+
+$jumbotron-padding: 0.8em;
+$jumbotron-bg: $aibk-red;
+$card-border-color: $aibk-dark-red;
+
+// $border-radius-lg: 0;
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+
+
+@include bg-variant('.bg-aibk', $aibk-dark-red);
+
+.text-aibk-red {
+    color: $aibk-red;
+}
+
+.text-aibk-dark-red {
+    color: $aibk-dark-red;
+}
+
+html {
+    overflow-y:scroll;
+}
+
+.jumbotron-fo {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.team {
+    vertical-align: middle !important;
+    display: inline-block;
+    @include text-truncate;
+    width: 200px;
+    @media screen and (max-width: 900px) {
+        width: 140px;
+    }
+}
+
+.team-sm {
+    vertical-align: middle !important;
+    display: inline-block;
+    @include text-truncate;
+    width: 200px;
+    @media screen and (max-width: 600px) {
+        width: 130px;
+    }
+}
+
+.team-seperator {
+    vertical-align: middle !important;
+    text-align: center !important;
+    width: 32px;
+}
+
+.goal {
+    vertical-align: middle !important;
+    text-align: center !important;
+    width: 56px;
+}
+
+.rank {
+    vertical-align: middle !important;
+    text-align: center !important;
+    width: 48px;
+}
+
+.point {
+    vertical-align: middle !important;
+    text-align: center !important;
+    width: 50px;
+}
+
+.table-result {
+     width: auto;
+     margin: auto;
+    }
+
+.table-match {
+    width: auto;
+    margin: auto;
+}
+
+.match-no {
+    vertical-align: middle !important;
+    text-align: center !important;
+    color: $text-muted !important;
+    width: 55px;
+}
+
+.time {
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    width: 70px;
+}
+
+.group {
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    width: 75px;
+}
+
+.row-striped {
+    background-color: $table-accent-bg;
+}
+
