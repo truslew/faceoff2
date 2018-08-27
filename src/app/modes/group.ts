@@ -1,7 +1,7 @@
-import { Team } from 'app/models/team';
-import { Match } from 'app/models/match';
-import { AgeClass } from 'app/models/ageClass';
-import { TableTeam } from 'app/models/tableTeam';
+import { AgeClass } from './ageClass';
+import { Team } from './team';
+import { Match } from './match';
+import { TableTeam } from './tableTeam';
 
 export class Group {
     public id: number;

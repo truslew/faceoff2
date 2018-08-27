@@ -1,0 +1,34 @@
+<div class="jumbotron jumbotron-fo">
+    <h1 class="display-3 text-white">Gruppe inndeling</h1>
+</div>
+
+<div *ngIf="loading;then lodingTemplate else loadedTemplate"></div>
+
+<ng-template #lodingTemplate>
+    <div class="row justify-content-center">
+        <div class="col-12 text-center mt-3">
+            <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #loadedTemplate>
+    <div class="row">
+        <div class="col-md-6 col-12 mb-2" *ngFor="let group of groups">
+            <div class="card">
+                <div class="card-header alert-danger">
+                    <h2>{{group.name}}</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor="let team of group.teams">
+                            <a [routerLink]="['/lag-detaljer', {team: team.id}]">
+                                {{team.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,64 @@
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { Team } from '../modes/team';
+import { FaceoffDataService } from '../services/faceoff-data.service';
+import { TeamsDataContext } from '../modes/teamsDataContext';
+
+@Component({
+    selector: 'app-team-details',
+    templateUrl: './team-details.component.html'
+})
+export class TeamDetailsComponent implements OnInit {
+    public teams: Team[] = [];
+
+    public activeTeam: Team = null;
+
+    private activeTeamId: number = null;
+
+    public loading = true;
+
+    constructor(
+        private titleService: Title,
+        private dataService: FaceoffDataService,
+        private route: ActivatedRoute,
+        private router: Router
+    ) {
+        titleService.setTitle('Lag detaljer | Face Off');
+        dataService.teamsDataContext.subscribe(data => this.dataLoaded(data));
+    }
+
+    ngOnInit(): void {
+        const params$ = this.route.paramMap;
+        params$.subscribe(p => this.teamChange(p));
+    }
+
+    private teamChange(params: ParamMap) {
+        this.activeTeamId = this.getParamNumber(params, 'team');
+
+        this.initActiveTeam();
+    }
+
+    private getParamNumber(params: ParamMap, name: string): number {
+        const id = parseInt(params.get(name), 10);
+        return id > 0 ? id : null;
+    }
+
+    private initActiveTeam(): void {
+        this.activeTeam = this.teams.find(t => t.id === this.activeTeamId);
+
+        if (this.activeTeam != null) {
+            this.titleService.setTitle(`Lag detaljer - ${this.activeTeam.name} | Face Off`);
+            return;
+        }
+
+        this.titleService.setTitle('Lag detaljer | Face Off');
+    }
+
+    private dataLoaded(dataContext: TeamsDataContext): void {
+        this.teams = dataContext.teams;
+        this.initActiveTeam();
+
+        this.loading = false;
+    }
+}

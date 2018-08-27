@@ -1,0 +1,28 @@
+<div class="jumbotron jumbotron-fo">
+    <h1 class="display-3 text-white">Tabeller</h1>
+</div>
+
+<div *ngIf="loading;then lodingTemplate else loadedTemplate"></div>
+
+<ng-template #lodingTemplate>
+    <div class="row justify-content-center">
+        <div class="col-12 text-center mt-3">
+            <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #loadedTemplate>
+    <div class="row">
+        <div class="col-12 mb-2" *ngFor="let group of groups">
+            <div class="card">
+                <div class="card-header alert-danger">
+                    <h2>{{group.name}}</h2>
+                </div>
+                <div class="card-body">
+                    <app-table-view [table]="group.table"></app-table-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

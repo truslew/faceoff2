@@ -1,8 +1,8 @@
-import { AgeClass } from 'app/models/ageClass';
-import { Group } from 'app/models/group';
-import { Team } from 'app/models/team';
-import { Match } from 'app/models/match';
-import { Result } from 'app/models/result';
+import { AgeClass } from './ageClass';
+import { Group } from './group';
+import { Team } from './team';
+import { Match } from './match';
+import { Result } from './result';
 
 export class TeamsDataContext {
     public ageClasses: AgeClass[] = [];

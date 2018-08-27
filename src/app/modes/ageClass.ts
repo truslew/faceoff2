@@ -1,5 +1,5 @@
-import { Group } from 'app/models/group';
-import { Team } from 'app/models/team';
+import { Group } from './group';
+import { Team } from './team';
 
 export class AgeClass {
     public id: number;

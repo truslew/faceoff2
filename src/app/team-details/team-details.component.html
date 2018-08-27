@@ -1,0 +1,25 @@
+<div class="jumbotron jumbotron-fo">
+    <h1 class="display-3 text-white">{{activeTeam?.name}}</h1>
+    <p class="lead text-white">{{activeTeam?.group.name}}</p>
+</div>
+
+<div *ngIf="loading;then lodingTemplate else loadedTemplate"></div>
+
+<ng-template #lodingTemplate>
+    <div class="row justify-content-center">
+        <div class="col-12 text-center mt-3">
+            <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #loadedTemplate>
+    <div class="card">
+        <div class="card-header alert-danger">
+            <h2>Kamper</h2>
+        </div>
+        <div class="card-body">
+            <app-match-list [matches]="activeTeam?.matches" [showAgeClass]="false" [showGroup]="false"></app-match-list>
+        </div>
+    </div>
+</ng-template>

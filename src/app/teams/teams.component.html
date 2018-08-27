@@ -1,0 +1,41 @@
+<div class="jumbotron jumbotron-fo">
+    <h1 class="display-3 text-white">Påmeldte lag</h1>
+</div>
+
+<div *ngIf="loading;then lodingTemplate else loadedTemplate"></div>
+
+<ng-template #lodingTemplate>
+    <div class="row justify-content-center">
+        <div class="col-12 text-center mt-3">
+            <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #loadedTemplate>
+    <div class="row">
+        <div class="col-md-6 col-12 mb-2" *ngFor="let ageClass of ageClasses">
+            <div class="card">
+                <div class="card-header alert-danger">
+                    <h2>{{ageClass.name}}</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor="let team of ageClass.teams">
+                            <a [routerLink]="['/lag-detaljer', {team: team.id}]">
+                                {{team.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- <div class="card-body" *ngFor="let group of ageClass.groups">
+                    <h4 class="card-title text-center">{{group.name}}</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor="let team of group.teams">{{team.name}}</li>
+                    </ul>
+                </div>  -->
+            </div>
+        </div>
+    </div>
+</ng-template>

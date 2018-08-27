@@ -1,4 +1,4 @@
-import { Group } from 'app/models/group';
+import { Group } from './group';
 
 export class GroupLink {
     public groupId: number;

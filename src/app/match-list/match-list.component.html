@@ -1,0 +1,159 @@
+<div *ngIf="!simple">
+    <table class="table table-responsive table-sm d-md-none">
+        <tbody>
+            <ng-container *ngFor="let dayMatch of dayMatches">
+                <tr *ngIf="showDate">
+                    <td colspan="5">
+                        <h4 class="card-title">{{dayMatch.caption}}</h4>
+                    </td>
+                </tr>
+                <ng-container *ngFor="let match of dayMatch.matches; even as isEven;trackBy: trackByFn">
+                    <tr [ngClass]="{'row-striped': isEven && match.status != 1, 'table-info': match.status == 1}">
+                        <td class="match-no" *ngIf="isAutenticated" rowspan="2">
+                            <button class="btn btn-outline-primary btn-sm" (click)="playMatch(match)">#{{match.id}}</button>
+                        </td>
+                        <td class="match-no" *ngIf="!isAutenticated" rowspan="2">
+                            #{{match.id}}
+                        </td>
+                        <td class="time" rowspan="2">
+                            {{match.start | amDateFormat:'HH:mm'}}
+                        </td>
+                        <td *ngIf="showAgeClass" class="group" rowspan="2">
+                            {{match.ageClass?.name}}
+                        </td>
+                        <td *ngIf="showGroup" class="group" rowspan="2">
+                            {{match.group?.name}}
+                        </td>
+                        <td class="team-sm">
+                            {{match.description1}}
+                        </td>
+                        <td>
+                            <div *ngIf="match.showGoals" [ngClass]="match.goal1Classes" style="font-size: 100%">
+                                {{match.result?.goals1}}
+                            </div>
+                        </td>
+                        <td class="text-nowrap align-middle" rowspan="2">
+                            {{match.description}}
+                        </td>
+
+                    </tr>
+                    <tr [ngClass]="{'row-striped': isEven && match.status != 1, 'table-info': match.status == 1}">
+                        <td class="team-sm">
+                            {{match.description2}}
+                        </td>
+                        <td>
+                            <div *ngIf="match.showGoals" [ngClass]="match.goal2Classes" style="font-size: 100%">
+                                {{match.result?.goals2}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<div class="d-none d-md-block" *ngIf="!simple">
+    <table class="table table-responsive table-match">
+        <tbody>
+            <ng-container *ngFor="let dayMatch of dayMatches">
+                <tr *ngIf="showDate">
+                    <td colspan="5">
+                        <h4 class="card-title">{{dayMatch.caption}}</h4>
+                    </td>
+                </tr>
+                <ng-container *ngFor="let match of dayMatch.matches; even as isEven;trackBy: trackByFn">
+                    <tr [ngClass]="{'row-striped': isEven && match.status != 1, 'table-info': match.status == 1}">
+                        <td class="match-no">
+                            <button class="btn btn-outline-primary btn-sm" *ngIf="isAutenticated" (click)="playMatch(match)">#{{match.id}}</button>
+                            <div class="text-muted text-center" *ngIf="!isAutenticated">#{{match.id}}</div>
+                        </td>
+                        <td class="time">
+                            {{match.start | amDateFormat:'HH:mm'}}
+                        </td>
+                        <td *ngIf="showAgeClass" class="group">
+                            {{match.ageClass?.name}}
+                        </td>
+                        <td *ngIf="showGroup" class="group">
+                            {{match.group?.name}}
+                        </td>
+                        <td class="align-middle">
+                            <div class="team text-right">
+                                {{match.description1}}
+                                <span *ngIf="isHenning && match.team1 != null" class="text-muted"> ({{match?.team1?.id}})</span>
+                            </div>
+                        </td>
+                        <td class="team-seperator">
+                            <div *ngIf="match.t1!=null">&#8211;</div>
+                        </td>
+                        <td class="align-middle">
+                            <div class="team text-left">
+                                {{match.description2}}
+                                <span *ngIf="isHenning && match.team2 != null" class="text-muted"> ({{match?.team2?.id}})</span>
+                            </div>
+                        </td>
+                        <td class="goal">
+                            <div *ngIf="match.showGoals" [ngClass]="match.goal1Classes" style="font-size: 100%">
+                                {{match.result?.goals1}}
+                            </div>
+                        </td>
+                        <td class="team-seperator">
+                            <div *ngIf="match.showGoals">&#8211;</div>
+                        </td>
+                        <td class="goal">
+                            <div *ngIf="match.showGoals" [ngClass]="match.goal2Classes" style="font-size: 100%">
+                                {{match.result?.goals2}}
+                            </div>
+                        </td>
+                        <td class="text-nowrap">
+                            {{match.description}}
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<div class="d-none d-md-block" *ngIf="simple">
+    <table class="table table-match">
+        <tbody>
+            <ng-container *ngFor="let match of matches; even as isEven">
+                <tr [ngClass]="{'row-striped': isEven && match.status != 1, 'table-info': match.status == 1}">
+                    <td class="match-no text-muted">
+                        #{{match.id}}
+                    </td>
+                    <td class="time">
+                        {{match.start | amDateFormat:'HH:mm'}}
+                    </td>
+                    <td class="align-middle">
+                        <div class="team text-right">
+                            {{match.description1}}
+                        </div>
+                    </td>
+                    <td class="team-seperator">
+                        <span *ngIf="match.t1!=null">&#8211;</span>
+                    </td>
+                    <td class="align-middle">
+                        <div class="team text-left">
+                            {{match.description2}}
+                        </div>
+                    </td>
+                    <td class="goal">
+                        <span *ngIf="match.showGoals" [ngClass]="match.goal1Classes" style="font-size: 100%">
+                            {{match.result?.goals1}}
+                        </span>
+                    </td>
+                    <td class="team-seperator">
+                        <span *ngIf="match.showGoals">&#8211;</span>
+                    </td>
+                    <td class="goal">
+                        <span *ngIf="match.showGoals" [ngClass]="match.goal2Classes" style="font-size: 100%">
+                            {{match.result?.goals2}}
+                        </span>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

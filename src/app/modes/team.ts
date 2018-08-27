@@ -1,5 +1,5 @@
-import { Group } from 'app/models/group';
-import { Match } from 'app/models/match';
+import { Group } from './group';
+import { Match } from './match';
 
 export class Team {
     public id: number;

@@ -1,4 +1,4 @@
-import { Team } from 'app/models/team';
+import { Team } from './team';
 
 export class TableTeam {
     public team: Team;

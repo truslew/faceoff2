@@ -1,4 +1,4 @@
-import { Match } from 'app/models/match';
+import { Match } from './match';
 
 export class Result {
     public key: string;

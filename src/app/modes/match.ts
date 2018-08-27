@@ -1,10 +1,10 @@
-import { Group } from 'app/models/group';
-import { Team } from 'app/models/team';
-import { AgeClass } from 'app/models/ageClass';
+import { AgeClass } from './ageClass';
+import { Group } from './group';
+import { Team } from './team';
+import { GroupLink } from './groupLink';
+import { MatchLink } from './matchLink';
+import { Result, MatchStatus } from './result';
 import * as moment from 'moment';
-import { Result, MatchStatus } from 'app/models/result';
-import { GroupLink } from 'app/models/groupLink';
-import { MatchLink } from 'app/models/matchLink';
 
 export class Match {
     public id: number;

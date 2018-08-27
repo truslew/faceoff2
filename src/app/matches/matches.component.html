@@ -1,0 +1,40 @@
+<div class="jumbotron jumbotron-fo">
+    <h1 class="display-3 text-white">Kamper</h1>
+</div>
+
+<div *ngIf="loading;then lodingTemplate else loadtedTemplate"></div>
+
+<ng-template #lodingTemplate>
+    <div class="row justify-content-center">
+        <div class="col-12 text-center mt-3">
+            <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #loadtedTemplate>
+
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills flex-column flex-sm-row nav-fill">
+                <li class="nav-item">
+                    <a class="flex-sm-fill text-sm-center nav-link text-nowrap" [routerLink]="['/kamper']" [ngClass]="{'active': activeClass==null && activeGroup == null}">Alle</a>
+                </li>
+                <li class="nav-item text-nowrap" *ngFor="let ageClass of ageClasses">
+                    <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': activeClass==ageClass && activeGroup == null}" [routerLink]="['/kamper', {class: ageClass.id}]">{{ageClass.name}}</a>
+                </li>
+                <li class="nav-item text-nowrap" *ngFor="let group of groupFilters">
+                    <a class="flex-sm-fill text-sm-center nav-link" [ngClass]="{'active': activeGroup == group}" [routerLink]="['/kamper', {group: group.id}]">{{group.name}}</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body">
+            <h2 class="card-title text-center">Gruppe spill</h2>
+            <app-match-list [matches]="groupPlay" [showGroup]="!activeGroup" [showAgeClass]="false"></app-match-list>
+
+            <h2 class="card-title text-center">Finaler</h2>
+            <app-match-list [matches]="finals" [showGroup]="false" [showAgeClass]="!activeGroup"></app-match-list>
+        </div>
+    </div>
+</ng-template>
