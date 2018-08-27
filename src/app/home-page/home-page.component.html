@@ -3,18 +3,17 @@
 <div class="row">
     <div class="col-12">
         <p class="lead text-center">Asker Innebandy arrangerer</p>
-        <p class="display-3 text-center text-aibk-red">Face&nbsp;Off Cup</p>
-        <p class="display-4 text-center">15. og 16. september 2018</p>
-        <p class="lead text-center">Årets sesong oppkjøring for G12/13 og G14/15.</p>
-
-
-        <p class="lead text-center">8 lag per klass.</p>
-        <p class="lead text-center">Minimum 3 kamper på 2 x 15 min.</p>
-        <p class="lead text-center">Semifinaler og finaler på 3 x 15 min.</p>
+        <h1 class="display-1 text-center text-aibk-red">Face&nbsp;Off Cup</h1>
+        <p class="lead text-center">15. og 16. september 2018</p>
     </div>
 </div>
-<ul>
-    <li class="text" *ngFor="let item of items | async">
-      {{item.name}}
-    </li>
-  </ul>
+
+<div class="card" *ngIf="matches?.length>=1">
+    <div class="card-header text-center display-4">
+        Spilles nå
+    </div>
+    <div class="card-body text-center">
+        <app-match-list [matches]="matches" [showGroup]="true" [showAgeClass]="false" [showDate]="false"></app-match-list>
+    </div>
+</div>
+

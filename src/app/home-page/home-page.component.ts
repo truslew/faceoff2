@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Title } from '@angular/platform-browser';
+import { Match } from '../modes/match';
+import { FaceoffDataService } from '../services/faceoff-data.service';
+import { TeamsDataContext } from '../modes/teamsDataContext';
+import { MatchStatus } from '../modes/result';
 
 @Component({
     selector: 'app-home-page',
@@ -8,10 +13,16 @@ import { AngularFireDatabase } from 'angularfire2/database';
     styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-    items: Observable<any[]>;
-    constructor(db: AngularFireDatabase) {
-        this.items = db.list('teams').valueChanges();
+    public matches: Match[] = [];
+
+    constructor(private dataService: FaceoffDataService, titleService: Title) {
+        titleService.setTitle('Face Off Cup - Asker IBK');
+        dataService.teamsDataContext.subscribe(data => this.dataLoaded(data));
     }
 
-    ngOnInit() {}
+    ngOnInit() { }
+
+    private dataLoaded(dataContext: TeamsDataContext): void {
+        this.matches = dataContext.matches.filter(m => m.status === MatchStatus.Current);
+    }
 }
