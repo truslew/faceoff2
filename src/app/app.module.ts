@@ -19,6 +19,8 @@ import { TableViewComponent } from './table-view/table-view.component';
 import { TableViewPageComponent } from './table-view-page/table-view-page.component';
 import { MatchPlayComponent } from './match-play/match-play.component';
 import { ReglementComponent } from './reglement/reglement.component';
+import { EmailComponent } from './email/email.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -32,13 +34,14 @@ import { ReglementComponent } from './reglement/reglement.component';
         MatchListComponent,
         TableViewComponent,
         TableViewPageComponent,
-        // EmailComponent,
+        EmailComponent,
         MatchPlayComponent,
         ReglementComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
+        ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireDatabaseModule,
         AngularFireAuthModule,

@@ -27,7 +27,7 @@ export class FaceoffDataService {
     public teams = new BehaviorSubject<Team[]>([]);
     public matches = new BehaviorSubject<Match[]>([]);
     public results = new BehaviorSubject<Result[]>([]);
-    public results$: AngularFireList<Result[]>;
+    public results$: AngularFireList<Result>;
 
     public teamsDataContext = new BehaviorSubject<TeamsDataContext>(new TeamsDataContext());
 
@@ -215,9 +215,9 @@ export class FaceoffDataService {
 
         const existing = this.results.getValue().find(m => m.matchId === matchId);
         // if (existing != null) {
-        //     this.results$.update(existing.key, data);
+        //     this.results$.update(, data);
         // } else {
-        //     this.results$.push(data);
+        //     this.results$.push({ key: data.matchId, ...data });
         // }
     }
 

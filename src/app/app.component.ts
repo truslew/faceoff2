@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
     selector: 'app-root',
@@ -9,8 +10,9 @@ import * as moment from 'moment';
 })
 export class AppComponent {
     public isNavbarCollapsed = true;
+    public name: string = null;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private af: AngularFireAuth) {
         this.router.events.subscribe(event => {
             // if (configuration.enableGoogleAnalytics && event instanceof NavigationEnd) {
             //     ga('set', 'page', event.urlAfterRedirects);
@@ -20,13 +22,13 @@ export class AppComponent {
             this.isNavbarCollapsed = true;
         });
 
-        // this.af.authState.subscribe(auth => {
-        //     if (auth) {
-        //         this.name = auth.email;
-        //     } else {
-        //         this.name = null;
-        //     }
-        // });
+        this.af.authState.subscribe(auth => {
+            if (auth) {
+                this.name = auth.email;
+            } else {
+                this.name = null;
+            }
+        });
 
         moment.locale('nb', {
             months: 'januar_februar_mars_april_mai_juni_juli_august_september_oktober_november_desember'.split('_'),
@@ -37,4 +39,9 @@ export class AppComponent {
             }
         });
     }
+
+    public logout(): void {
+        this.af.auth.signOut();
+    }
+
 }

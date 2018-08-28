@@ -9,6 +9,7 @@ import { MatchesComponent } from './matches/matches.component';
 import { TableViewPageComponent } from './table-view-page/table-view-page.component';
 import { MatchPlayComponent } from './match-play/match-play.component';
 import { ReglementComponent } from './reglement/reglement.component';
+import { EmailComponent } from './email/email.component';
 
 const routes: Routes = [
     { path: 'hjem', component: HomePageComponent },
@@ -19,7 +20,7 @@ const routes: Routes = [
     { path: 'kamper', component: MatchesComponent },
     { path: 'tabeller', component: TableViewPageComponent },
     { path: 'reglement', component: ReglementComponent },
-    // { path: 'login', component: EmailComponent },
+    { path: 'login', component: EmailComponent },
     { path: 'match-play', component: MatchPlayComponent },
 
     { path: '', redirectTo: 'hjem', pathMatch: 'full' },
