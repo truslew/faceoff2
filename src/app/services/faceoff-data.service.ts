@@ -6,7 +6,7 @@ import { AgeClass } from '../modes/ageClass';
 import { Group } from '../modes/group';
 import { Team } from '../modes/team';
 import { Match } from '../modes/match';
-import { Result, MatchStatus } from '../modes/result';
+import { Result, MatchStatus, ResultDao } from '../modes/result';
 import { TeamsDataContext } from '../modes/teamsDataContext';
 import { GroupLink } from '../modes/groupLink';
 import { MatchLink } from '../modes/matchLink';
@@ -27,7 +27,8 @@ export class FaceoffDataService {
     public teams = new BehaviorSubject<Team[]>([]);
     public matches = new BehaviorSubject<Match[]>([]);
     public results = new BehaviorSubject<Result[]>([]);
-    public results$: AngularFireList<Result>;
+
+    public results$: AngularFireList<any>;
 
     public teamsDataContext = new BehaviorSubject<TeamsDataContext>(new TeamsDataContext());
 
@@ -64,8 +65,10 @@ export class FaceoffDataService {
             .valueChanges()
             .subscribe(data => this.matches.next(this.mapMatches(data)));
 
-        this.results$ = this.angularFireDatabase.list('/results');
-        this.results$.valueChanges().subscribe(data => this.results.next(this.mapResults(data)));
+        this.angularFireDatabase
+            .list('/results')
+            .valueChanges()
+            .subscribe(data => this.results.next(this.mapResults(data)));
 
         this.ageClasses.subscribe(data => {
             this.builder.ageClasses = data;
@@ -206,19 +209,14 @@ export class FaceoffDataService {
     }
 
     public saveResult(matchId: number, goals1: number, goals2: number, status: MatchStatus): void {
-        const data = {
+        const data: ResultDao = {
             matchId: matchId,
             goals1: goals1,
             goals2: goals2,
             status: this.getStatusChar(status)
         };
 
-        const existing = this.results.getValue().find(m => m.matchId === matchId);
-        // if (existing != null) {
-        //     this.results$.update(, data);
-        // } else {
-        //     this.results$.push({ key: data.matchId, ...data });
-        // }
+        this.angularFireDatabase.list('/results').set(`${matchId}`, data);
     }
 
     private getStatusFromChar(char: string): MatchStatus {

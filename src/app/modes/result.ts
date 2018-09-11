@@ -1,5 +1,13 @@
 import { Match } from './match';
 
+export interface ResultDao {
+    matchId: number;
+    status: string;
+
+    goals1: number;
+    goals2: number;
+}
+
 export class Result {
     public key: string;
     public matchId: number;
