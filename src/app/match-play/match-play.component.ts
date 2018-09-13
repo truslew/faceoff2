@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Match } from '../modes/match';
 import { Result, MatchStatus } from '../modes/result';
@@ -13,26 +13,11 @@ import { TeamsDataContext } from '../modes/teamsDataContext';
 export class MatchPlayComponent implements OnInit {
     private matchId: number = null;
     public matches: Match[] = [];
-    public match: Match = null;
-
     public results: Result[] = [];
-    public result: Result = null;
 
     public loading = true;
 
-    public goals1 = 0;
-    public goals2 = 0;
-
-    public status: MatchStatus = MatchStatus.Unplayed;
-
-    public firstLoad: boolean;
-
-    constructor(
-        private titleService: Title,
-        private dataService: FaceoffDataService,
-        private route: ActivatedRoute,
-        private router: Router
-    ) {
+    constructor(titleService: Title, private dataService: FaceoffDataService, private route: ActivatedRoute) {
         titleService.setTitle('Kamp registrering | Face Off');
 
         dataService.teamsDataContext.subscribe(data => this.dataLoaded(data));
@@ -43,10 +28,39 @@ export class MatchPlayComponent implements OnInit {
         params$.subscribe(p => this.matchChange(p));
     }
 
+    public get goals1(): number {
+        const result = this.getResult();
+        return result != null ? result.goals1 : 0;
+    }
+
+    public get goals2(): number {
+        const result = this.getResult();
+        return result != null ? result.goals2 : 0;
+    }
+
+    public get status(): MatchStatus {
+        const result = this.getResult();
+        return result != null ? result.status : MatchStatus.Unplayed;
+    }
+
+    public get match(): Match {
+        if (this.matchId != null) {
+            return this.matches.find(c => c.id === this.matchId);
+        }
+
+        return null;
+    }
+
+    public getResult(): Result {
+        if (this.matchId != null) {
+            return this.results.find(c => c.matchId === this.matchId);
+        }
+
+        return null;
+    }
+
     private matchChange(params: ParamMap) {
         this.matchId = this.getParamNumber(params, 'match');
-        this.firstLoad = true;
-        this.initMatch();
     }
 
     private getParamNumber(params: ParamMap, name: string): number {
@@ -58,42 +72,20 @@ export class MatchPlayComponent implements OnInit {
         this.matches = dataContext.matches;
         this.results = dataContext.results;
 
-        this.initMatch();
-
         this.loading = !dataContext.matchesReady;
-    }
-
-    private initMatch(): void {
-        if (this.matchId != null) {
-            this.match = this.matches.find(c => c.id === this.matchId);
-            this.result = this.results.find(c => c.matchId === this.matchId);
-
-            if (this.firstLoad && this.result != null) {
-                this.goals1 = this.result.goals1;
-                this.goals2 = this.result.goals2;
-                this.status = this.result.status;
-                this.firstLoad = false;
-            }
-
-            return;
-        }
-
-        this.match = null;
-        this.result = null;
-        this.status = 0;
     }
 
     public goal(teamIndex: number, increment: number): void {
         switch (teamIndex) {
             case 1:
-                this.goals1 = this.ensureRange(this.goals1, increment);
+                const goals1 = this.ensureRange(this.goals1, increment);
+                this.updateResult(goals1, this.goals2, this.status);
                 break;
             case 2:
-                this.goals2 = this.ensureRange(this.goals2, increment);
+                const goals2 = this.ensureRange(this.goals2, increment);
+                this.updateResult(this.goals1, goals2, this.status);
                 break;
         }
-
-        this.updateResult();
     }
 
     private ensureRange(current: number, increment: number): number {
@@ -105,14 +97,13 @@ export class MatchPlayComponent implements OnInit {
         return newValue;
     }
 
-    private updateResult(): void {
+    private updateResult(goals1: number, goals2: number, status: MatchStatus): void {
         if (this.match != null) {
-            this.dataService.saveResult(this.match.id, this.goals1, this.goals2, this.status);
+            this.dataService.saveResult(this.matchId, goals1, goals2, status);
         }
     }
 
     private setStatus(status: MatchStatus): void {
-        this.status = status;
-        this.updateResult();
+        this.updateResult(this.goals1, this.goals2, status);
     }
 }

@@ -28,11 +28,11 @@ export class FaceoffDataService {
     public matches = new BehaviorSubject<Match[]>([]);
     public results = new BehaviorSubject<Result[]>([]);
 
-    public results$: AngularFireList<any>;
-
     public teamsDataContext = new BehaviorSubject<TeamsDataContext>(new TeamsDataContext());
 
     public authenticated = new BehaviorSubject<boolean>(false);
+
+    public connected = new BehaviorSubject<boolean>(false);
 
     public isHenning = new BehaviorSubject<boolean>(false);
 
@@ -216,7 +216,11 @@ export class FaceoffDataService {
             status: this.getStatusChar(status)
         };
 
-        this.angularFireDatabase.list('/results').set(`${matchId}`, data);
+        try {
+            this.angularFireDatabase.list('/results').set(`${matchId}`, data);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     private getStatusFromChar(char: string): MatchStatus {
