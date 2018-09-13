@@ -16,10 +16,12 @@ export class MatchPlayComponent implements OnInit {
     public results: Result[] = [];
 
     public loading = true;
+    public isAutenticated = false;
 
     constructor(titleService: Title, private dataService: FaceoffDataService, private route: ActivatedRoute) {
         titleService.setTitle('Kamp registrering | Face Off');
 
+        dataService.authenticated.subscribe(auth => (this.isAutenticated = auth));
         dataService.teamsDataContext.subscribe(data => this.dataLoaded(data));
     }
 

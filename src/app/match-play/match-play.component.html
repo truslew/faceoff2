@@ -34,7 +34,7 @@
     <div class="card mt-2">
         <div class="card-body">
             <div class="row">
-                <div class="col-6 text-center ">
+                <div class="col-6 text-center">
                     <h2>{{match?.team1?.name}}</h2>
                 </div>
                 <div class="col-6 text-center ">
@@ -44,12 +44,12 @@
 
             <div class="row mt-2">
                 <div class="col-6">
-                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="goal(1,1)">
+                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="goal(1,1)" [disabled]="!isAutenticated">
                         <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="col-6">
-                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="goal(2,1)">
+                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="goal(2,1)" [disabled]="!isAutenticated">
                         <i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -62,12 +62,12 @@
 
             <div class="row">
                 <div class="col-6">
-                    <button type="button" class="btn btn-outline-secondary btn-lg btn-block" (click)="goal(1,-1)">
+                    <button type="button" class="btn btn-outline-secondary btn-lg btn-block" (click)="goal(1,-1)" [disabled]="!isAutenticated">
                         <i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="col-6">
-                    <button type="button" class="btn btn-outline-secondary btn-lg btn-block" (click)="goal(2,-1)">
+                    <button type="button" class="btn btn-outline-secondary btn-lg btn-block" (click)="goal(2,-1)" [disabled]="!isAutenticated">
                         <i class="fa fa-minus-circle fa-lg" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -82,13 +82,13 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12 col-md-4 mt-2">
-                    <button type="button" class="btn btn-block" [ngClass]="status===0 ? 'btn-primary' : 'btn-outline-secondary'" (click)="setStatus(0)">Uspilt</button>
+                    <button type="button" class="btn btn-block" [ngClass]="status===0 ? 'btn-primary' : 'btn-outline-secondary'" (click)="setStatus(0)" [disabled]="!isAutenticated">Uspilt</button>
                 </div>
                 <div class="col-12 col-md-4 mt-2">
-                    <button type="button" class="btn btn-block" [ngClass]="status===1 ? 'btn-primary' : 'btn-outline-primary'" (click)="setStatus(1)">Spilles nå</button>
+                    <button type="button" class="btn btn-block" [ngClass]="status===1 ? 'btn-primary' : 'btn-outline-primary'" (click)="setStatus(1)" [disabled]="!isAutenticated">Spilles nå</button>
                 </div>
                 <div class="col-12 col-md-4 mt-2">
-                    <button type="button" class="btn btn-block" [ngClass]="status===2 ? 'btn-primary' : 'btn-outline-warning'" (click)="setStatus(2)">Ferdig spilt</button>
+                    <button type="button" class="btn btn-block" [ngClass]="status===2 ? 'btn-primary' : 'btn-outline-warning'" (click)="setStatus(2)" [disabled]="!isAutenticated">Ferdig spilt</button>
                 </div>
             </div>
         </div>
