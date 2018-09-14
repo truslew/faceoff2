@@ -5,7 +5,6 @@ import { Match } from '../modes/match';
 import { Result, MatchStatus } from '../modes/result';
 import { FaceoffDataService } from '../services/faceoff-data.service';
 import { TeamsDataContext } from '../modes/teamsDataContext';
-import { interval } from 'rxjs';
 
 @Component({
     selector: 'app-match-play',
@@ -19,12 +18,11 @@ export class MatchPlayComponent implements OnInit {
     public loading = true;
     public isAutenticated = false;
 
-    constructor(titleService: Title, private dataService: FaceoffDataService, private route: ActivatedRoute, cd: ChangeDetectorRef) {
+    constructor(titleService: Title, private dataService: FaceoffDataService, private route: ActivatedRoute) {
         titleService.setTitle('Kamp registrering | Face Off');
 
         dataService.authenticated.subscribe(auth => (this.isAutenticated = auth));
         dataService.teamsDataContext.subscribe(data => this.dataLoaded(data));
-        interval(5000).subscribe(() => cd.markForCheck());
     }
 
     ngOnInit(): void {
