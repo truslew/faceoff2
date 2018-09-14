@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { BehaviorSubject } from 'rxjs';
 import { AgeClass } from '../modes/ageClass';
@@ -69,6 +69,8 @@ export class FaceoffDataService {
             .list('/results')
             .valueChanges()
             .subscribe(data => this.results.next(this.mapResults(data)));
+
+        this.angularFireDatabase.object('.info/connected').valueChanges().subscribe(x => console.log(x));
 
         this.ageClasses.subscribe(data => {
             this.builder.ageClasses = data;
