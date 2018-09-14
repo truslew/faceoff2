@@ -29,7 +29,6 @@ export class EmailComponent {
 
     onSubmit() {
         if (this.form.valid) {
-            console.log(this.form.value);
             this.af.auth
                 .signInWithEmailAndPassword(this.form.value.email, this.form.value.password)
                 .then(success => {
