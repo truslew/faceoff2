@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
+import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { AgeClass } from '../modes/ageClass';
 import { Group } from '../modes/group';
-import { Team } from '../modes/team';
-import { Match } from '../modes/match';
-import { Result, MatchStatus, ResultDao } from '../modes/result';
-import { TeamsDataContext } from '../modes/teamsDataContext';
 import { GroupLink } from '../modes/groupLink';
+import { Match } from '../modes/match';
 import { MatchLink } from '../modes/matchLink';
+import { MatchStatus, Result, ResultDao } from '../modes/result';
+import { Team } from '../modes/team';
+import { TeamsDataContext } from '../modes/teamsDataContext';
 import { RelationshipBuilder } from './relationship-builder';
-import * as moment from 'moment';
 
 @Injectable({
     providedIn: 'root'
@@ -70,7 +70,10 @@ export class FaceoffDataService {
             .valueChanges()
             .subscribe(data => this.results.next(this.mapResults(data)));
 
-        this.angularFireDatabase.object('.info/connected').valueChanges().subscribe(x => console.log(x));
+        this.angularFireDatabase
+            .object('.info/connected')
+            .valueChanges()
+            .subscribe(x => console.log(x));
 
         this.ageClasses.subscribe(data => {
             this.builder.ageClasses = data;

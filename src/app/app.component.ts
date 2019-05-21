@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
     selector: 'app-root',
@@ -43,5 +43,4 @@ export class AppComponent {
     public logout(): void {
         this.af.auth.signOut();
     }
-
 }
