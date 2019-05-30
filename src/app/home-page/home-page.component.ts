@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { Title } from '@angular/platform-browser';
 import { Match } from '../modes/match';
-import { FaceoffDataService } from '../services/faceoff-data.service';
-import { TeamsDataContext } from '../modes/teamsDataContext';
 import { MatchStatus } from '../modes/result';
+import { TeamsDataContext } from '../modes/teamsDataContext';
+import { FaceoffDataService } from '../services/faceoff-data.service';
 
 @Component({
     selector: 'app-home-page',
@@ -20,7 +18,7 @@ export class HomePageComponent implements OnInit {
         dataService.teamsDataContext.subscribe(data => this.dataLoaded(data));
     }
 
-    ngOnInit() { }
+    ngOnInit() {}
 
     private dataLoaded(dataContext: TeamsDataContext): void {
         this.matches = dataContext.matches.filter(m => m.status === MatchStatus.Current);

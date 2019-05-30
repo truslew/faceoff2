@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-// import * as firebase from 'firebase/app';
 
 @Component({
     selector: 'app-email',
