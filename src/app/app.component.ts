@@ -3,8 +3,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router, NavigationEnd } from '@angular/router';
 import * as moment from 'moment';
 import { environment } from '../environments/environment';
+import { filter } from 'rxjs/operators';
 
-declare let ga: Function;
+declare var gtag;
 
 @Component({
     selector: 'app-root',
@@ -16,13 +17,9 @@ export class AppComponent {
     public name: string = null;
 
     constructor(private router: Router, private af: AngularFireAuth) {
-        this.router.events.subscribe(event => {
-            if (environment.enableGoogleAnalytics && event instanceof NavigationEnd) {
-                ga('set', 'page', event.urlAfterRedirects);
-                ga('send', 'pageview');
-            }
-
-            this.isNavbarCollapsed = true;
+        const navEndEvent$ = router.events.pipe(filter(e => e instanceof NavigationEnd));
+        navEndEvent$.subscribe((e: NavigationEnd) => {
+            gtag('config', 'UA-101849670-1', { page_path: e.urlAfterRedirects });
         });
 
         this.af.authState.subscribe(auth => {
