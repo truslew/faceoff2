@@ -17,10 +17,16 @@ export class AppComponent {
     public name: string = null;
 
     constructor(private router: Router, private af: AngularFireAuth) {
-        const navEndEvent$ = router.events.pipe(filter(e => e instanceof NavigationEnd));
-        navEndEvent$.subscribe((e: NavigationEnd) => {
-            gtag('config', 'UA-101849670-1', { page_path: e.urlAfterRedirects });
-        });
+        router.events
+            .pipe(
+                filter(() => environment.enableGoogleAnalytics),
+                filter(e => e instanceof NavigationEnd)
+            )
+            .subscribe((e: NavigationEnd) => {
+                gtag('config', 'UA-101849670-1', { page_path: e.urlAfterRedirects });
+            });
+
+        router.events.subscribe(() => (this.isNavbarCollapsed = true));
 
         this.af.authState.subscribe(auth => {
             if (auth) {
