@@ -1,7 +1,7 @@
-import { Team } from '../../modes/team';
-import { Match } from '../../modes/match';
-import { TableTeam } from '../../modes/tableTeam';
-import { Group } from '../../modes/group';
+import { Team } from '../models/team';
+import { Match } from '../models/match';
+import { TableTeam } from '../models/tableTeam';
+import { Group } from '../models/group';
 
 export class TableGeneratorService {
     private teams: Team[];

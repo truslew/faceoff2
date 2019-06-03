@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { AgeClass } from '../modes/ageClass';
+import { AgeClass } from '../shared/models/ageClass';
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
-import { TeamsDataContext } from '../modes/teamsDataContext';
+import { TeamsDataContext } from '../shared/models/teamsDataContext';
 
 @Component({
     selector: 'app-teams',

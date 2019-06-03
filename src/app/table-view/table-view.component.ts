@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TableTeam } from '../modes/tableTeam';
+import { TableTeam } from '../shared/models/tableTeam';
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 
 @Component({

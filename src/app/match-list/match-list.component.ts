@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Match } from '../modes/match';
+import { Match } from '../shared/models/match';
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 import { DayMatch } from './DayMatch';
 import * as _ from 'lodash';

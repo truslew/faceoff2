@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Match } from '../modes/match';
-import { Result, MatchStatus } from '../modes/result';
+import { Match } from '../shared/models/match';
+import { Result, MatchStatus } from '../shared/models/result';
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
-import { TeamsDataContext } from '../modes/teamsDataContext';
+import { TeamsDataContext } from '../shared/models/teamsDataContext';
 
 @Component({
     selector: 'app-match-play',

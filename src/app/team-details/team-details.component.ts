@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Team } from '../modes/team';
+import { Team } from '../shared/models/team';
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
-import { TeamsDataContext } from '../modes/teamsDataContext';
+import { TeamsDataContext } from '../shared/models/teamsDataContext';
 
 @Component({
     selector: 'app-team-details',

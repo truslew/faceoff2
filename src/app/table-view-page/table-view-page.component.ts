@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { Group } from '../modes/group';
+import { Group } from '../shared/models/group';
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
-import { TeamsDataContext } from '../modes/teamsDataContext';
+import { TeamsDataContext } from '../shared/models/teamsDataContext';
 
 @Component({
     selector: 'app-table-view-page',

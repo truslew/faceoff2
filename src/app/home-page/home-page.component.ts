@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Match } from '../modes/match';
-import { MatchStatus } from '../modes/result';
-import { TeamsDataContext } from '../modes/teamsDataContext';
+import { Match } from '../shared/models/match';
+import { MatchStatus } from '../shared/models/result';
+import { TeamsDataContext } from '../shared/models/teamsDataContext';
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 
 @Component({

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { AgeClass } from '../modes/ageClass';
-import { Group } from '../modes/group';
-import { Match } from '../modes/match';
+import { AgeClass } from '../shared/models/ageClass';
+import { Group } from '../shared/models/group';
+import { Match } from '../shared/models/match';
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
-import { TeamsDataContext } from '../modes/teamsDataContext';
+import { TeamsDataContext } from '../shared/models/teamsDataContext';
 
 @Component({
     selector: 'app-matches',
