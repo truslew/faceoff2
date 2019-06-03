@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { AgeClass } from '../modes/ageClass';
 import { Group } from '../modes/group';
 import { Match } from '../modes/match';
-import { FaceoffDataService } from '../services/faceoff-data.service';
+import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 import { TeamsDataContext } from '../modes/teamsDataContext';
 
 @Component({

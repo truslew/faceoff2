@@ -21,6 +21,7 @@ import { TableViewPageComponent } from './table-view-page/table-view-page.compon
 import { TableViewComponent } from './table-view/table-view.component';
 import { TeamDetailsComponent } from './team-details/team-details.component';
 import { TeamsComponent } from './teams/teams.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { TeamsComponent } from './teams/teams.component';
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         MomentModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        SharedModule
     ],
     providers: [],
     bootstrap: [AppComponent]

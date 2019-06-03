@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Match } from '../modes/match';
 import { Result, MatchStatus } from '../modes/result';
-import { FaceoffDataService } from '../services/faceoff-data.service';
+import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 import { TeamsDataContext } from '../modes/teamsDataContext';
 
 @Component({

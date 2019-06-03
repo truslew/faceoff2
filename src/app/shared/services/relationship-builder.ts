@@ -1,11 +1,11 @@
-import { AgeClass } from '../modes/ageClass';
-import { Group } from '../modes/group';
-import { Team } from '../modes/team';
-import { Match } from '../modes/match';
-import { Result } from '../modes/result';
-import { TeamsDataContext } from '../modes/teamsDataContext';
-import { GroupLink } from '../modes/groupLink';
-import { MatchLink } from '../modes/matchLink';
+import { AgeClass } from '../../modes/ageClass';
+import { Group } from '../../modes/group';
+import { Team } from '../../modes/team';
+import { Match } from '../../modes/match';
+import { Result } from '../../modes/result';
+import { TeamsDataContext } from '../../modes/teamsDataContext';
+import { GroupLink } from '../../modes/groupLink';
+import { MatchLink } from '../../modes/matchLink';
 import * as _ from 'lodash';
 import { TableGeneratorService } from './table-generator.service';
 

@@ -3,14 +3,14 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
-import { AgeClass } from '../modes/ageClass';
-import { Group } from '../modes/group';
-import { GroupLink } from '../modes/groupLink';
-import { Match } from '../modes/match';
-import { MatchLink } from '../modes/matchLink';
-import { MatchStatus, Result, ResultDao } from '../modes/result';
-import { Team } from '../modes/team';
-import { TeamsDataContext } from '../modes/teamsDataContext';
+import { AgeClass } from '../../modes/ageClass';
+import { Group } from '../../modes/group';
+import { GroupLink } from '../../modes/groupLink';
+import { Match } from '../../modes/match';
+import { MatchLink } from '../../modes/matchLink';
+import { MatchStatus, Result, ResultDao } from '../../modes/result';
+import { Team } from '../../modes/team';
+import { TeamsDataContext } from '../../modes/teamsDataContext';
 import { RelationshipBuilder } from './relationship-builder';
 
 @Injectable({

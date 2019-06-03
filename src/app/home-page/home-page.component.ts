@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Match } from '../modes/match';
 import { MatchStatus } from '../modes/result';
 import { TeamsDataContext } from '../modes/teamsDataContext';
-import { FaceoffDataService } from '../services/faceoff-data.service';
+import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 
 @Component({
     selector: 'app-home-page',

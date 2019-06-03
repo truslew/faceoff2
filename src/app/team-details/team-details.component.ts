@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Team } from '../modes/team';
-import { FaceoffDataService } from '../services/faceoff-data.service';
+import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 import { TeamsDataContext } from '../modes/teamsDataContext';
 
 @Component({

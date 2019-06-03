@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AgeClass } from '../modes/ageClass';
-import { FaceoffDataService } from '../services/faceoff-data.service';
+import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 import { TeamsDataContext } from '../modes/teamsDataContext';
 
 @Component({
