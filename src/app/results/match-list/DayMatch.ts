@@ -1,4 +1,4 @@
-import { Match } from '../shared/models/match';
+import { Match } from '../../shared/models/match';
 import * as moment from 'moment';
 
 export class DayMatch {
