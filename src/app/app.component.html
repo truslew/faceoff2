@@ -1,7 +1,14 @@
 <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-dark bg-aibk">
         <a class="navbar-brand" routerLink="/hjem">Face off</a>
-        <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+            class="navbar-toggler"
+            type="button"
+            (click)="isNavbarCollapsed = !isNavbarCollapsed"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -10,21 +17,21 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/informasjon">Informasjon</a>
                 </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" routerLink="/lag">Lag</a>
+                </li>
                 <li class="nav-item">
-                        <a class="nav-link" routerLink="/lag">Lag</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/grupper">Grupper</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/kamper">Kamper</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/tabeller">Tabeller</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/reglement">Reglement</a>
-                    </li>
+                    <a class="nav-link" routerLink="/grupper">Grupper</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/kamper">Kamper</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/tabeller">Tabeller</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/reglement">Reglement</a>
+                </li>
             </ul>
             <ul class="navbar-nav my-2 my-lg-0">
                 <li class="nav-item active" *ngIf="!name">
@@ -34,7 +41,7 @@
                 </li>
             </ul>
             <span class="navbar-text">
-                {{name}}
+                {{ name }}
             </span>
             <div class="form-inline my-2 my-lg-0 ml-2" *ngIf="name">
                 <button class="btn btn-outline-secondary my-2 my-sm-0" (click)="logout()">
