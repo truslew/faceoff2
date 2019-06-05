@@ -8,7 +8,7 @@ import * as moment from 'moment';
 
 export class Match {
     public id: number;
-    public ageClassId: number;
+    public ageClassId: string;
     public groupId: number;
     public teamId1: number;
     public teamId2: number;

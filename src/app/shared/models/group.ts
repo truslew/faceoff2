@@ -6,7 +6,7 @@ import { TableTeam } from './tableTeam';
 export class Group {
     public id: number;
     public name: string;
-    public ageClassId: number;
+    public ageClassId: string;
 
     public ageClass: AgeClass;
     teams: Team[] = [];

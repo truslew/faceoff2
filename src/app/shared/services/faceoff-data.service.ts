@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
-import { AgeClass } from '../models/ageClass';
+import { AgeClass, AgeClassDaoEx } from '../models/ageClass';
 import { Group } from '../models/group';
 import { GroupLink } from '../models/groupLink';
 import { Match } from '../models/match';
@@ -12,6 +12,7 @@ import { MatchStatus, Result, ResultDao } from '../models/result';
 import { Team } from '../models/team';
 import { TeamsDataContext } from '../models/teamsDataContext';
 import { RelationshipBuilder } from './relationship-builder';
+import { AgeClassService } from './age-class.service';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +37,7 @@ export class FaceoffDataService {
 
     public isHenning = new BehaviorSubject<boolean>(false);
 
-    constructor(angularFireAuth: AngularFireAuth, angularFireDatabase: AngularFireDatabase) {
+    constructor(angularFireAuth: AngularFireAuth, angularFireDatabase: AngularFireDatabase, private ageClassService: AgeClassService) {
         this.angularFireAuth = angularFireAuth;
         this.angularFireDatabase = angularFireDatabase;
 
@@ -45,9 +46,7 @@ export class FaceoffDataService {
             this.isHenning.next(auth != null && auth.email === 'henning@truslew.no');
         });
 
-        this.angularFireDatabase
-            .list('/classes')
-            .valueChanges()
+        this.ageClassService.all()
             .subscribe(data => this.ageClasses.next(this.mapAgeClass(data)));
 
         this.angularFireDatabase
@@ -105,12 +104,13 @@ export class FaceoffDataService {
         this.teamsDataContext.next(this.builder.build());
     }
 
-    private mapAgeClass(data: any): AgeClass[] {
+    private mapAgeClass(data: AgeClassDaoEx[]): AgeClass[] {
         const result = data
             .map(d => {
                 const c = new AgeClass();
                 c.id = d.id;
                 c.name = d.name;
+                c.showGroups = d.showGroups;
                 return c;
             })
             .sort((t1, t2) => t1.name.localeCompare(t2.name));
@@ -124,7 +124,7 @@ export class FaceoffDataService {
                 const g = new Group();
                 g.id = d.id;
                 g.name = d.name;
-                g.ageClassId = this.toInt(d.classId);
+                g.ageClassId = d.classId;
                 return g;
             })
             .sort((t1, t2) => t1.name.localeCompare(t2.name));
@@ -155,7 +155,7 @@ export class FaceoffDataService {
     private mapMatch(data: any): Match {
         const t = new Match();
         t.id = data.id;
-        t.ageClassId = this.toInt(data.classId);
+        t.ageClassId = data.classId;
         t.groupId = this.toInt(data.groupId);
         t.teamId1 = this.toInt(data.team1);
         t.teamId2 = this.toInt(data.team2);
