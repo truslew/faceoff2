@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Router, NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import * as moment from 'moment';
-import { environment } from '../environments/environment';
 import { filter } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 declare var gtag;
 
