@@ -215,9 +215,9 @@ export class FaceoffDataService {
 
     public saveResult(matchId: number, goals1: number, goals2: number, status: MatchStatus): void {
         const data: ResultDao = {
-            matchId: matchId,
-            goals1: goals1,
-            goals2: goals2,
+            matchId,
+            goals1,
+            goals2,
             status: this.getStatusChar(status)
         };
 
