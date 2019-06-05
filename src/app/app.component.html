@@ -17,18 +17,20 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/informasjon">Informasjon</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/lag">Lag</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/grupper">Grupper</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/kamper">Kamper</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/tabeller">Tabeller</a>
-                </li>
+                <ng-container *ngIf="showTeams">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/lag">Lag</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/grupper">Grupper</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/kamper">Kamper</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/tabeller">Tabeller</a>
+                    </li>
+                </ng-container>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/reglement">Reglement</a>
                 </li>

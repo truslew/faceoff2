@@ -1,6 +1,7 @@
 export const environment = {
     production: true,
     enableGoogleAnalytics: true,
+    showTeams: false,
     firebase: {
         apiKey: 'AIzaSyBAxbibd1n0y1LP7q41fJ37FJ-0FxXTZbg',
         authDomain: 'faceoff-1b3f7.firebaseapp.com',

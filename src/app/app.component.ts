@@ -49,4 +49,8 @@ export class AppComponent {
     public logout(): void {
         this.af.auth.signOut();
     }
+
+    public get showTeams(): boolean {
+        return environment.showTeams;
+    }
 }
