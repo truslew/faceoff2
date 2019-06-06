@@ -46,8 +46,7 @@ export class FaceoffDataService {
             this.isHenning.next(auth != null && auth.email === 'henning@truslew.no');
         });
 
-        this.ageClassService.all()
-            .subscribe(data => this.ageClasses.next(this.mapAgeClass(data)));
+        this.ageClassService.all().subscribe(data => this.ageClasses.next(this.mapAgeClass(data)));
 
         this.angularFireDatabase
             .list('/groups')
@@ -124,7 +123,7 @@ export class FaceoffDataService {
                 const g = new Group();
                 g.id = d.id;
                 g.name = d.name;
-                g.ageClassId = d.classId;
+                g.ageClassId = '' + d.classId;
                 return g;
             })
             .sort((t1, t2) => t1.name.localeCompare(t2.name));
