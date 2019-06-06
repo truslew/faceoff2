@@ -1,4 +1,5 @@
 import { Group } from './group';
+import { Ident } from './ident';
 import { Team } from './team';
 
 export class AgeClass {
@@ -14,6 +15,6 @@ export interface AgeClassDao {
     showGroups: boolean;
 }
 
-export interface AgeClassDaoEx extends AgeClassDao {
+export interface AgeClassDaoEx extends AgeClassDao, Ident {
     id: string;
 }
