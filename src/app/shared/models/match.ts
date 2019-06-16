@@ -9,9 +9,9 @@ import * as moment from 'moment';
 export class Match {
     public id: number;
     public ageClassId: string;
-    public groupId: number;
-    public teamId1: number;
-    public teamId2: number;
+    public groupId: string;
+    public teamId1: string;
+    public teamId2: string;
     public start: moment.Moment;
 
     public t1: string;

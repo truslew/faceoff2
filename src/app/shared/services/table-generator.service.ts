@@ -36,7 +36,7 @@ export class TableGeneratorService {
         this.result.forEach(t => (t.played = this.countMatchesForTeam(t.team.id)));
     }
 
-    private countMatchesForTeam(teamId: number): number {
+    private countMatchesForTeam(teamId: string): number {
         return this.matches.filter(
             m => m.isPlayed && m.team1 != null && m.team2 != null && (m.team1.id === teamId || m.team2.id === teamId)
         ).length;
@@ -54,11 +54,11 @@ export class TableGeneratorService {
         });
     }
 
-    private countWonForTeam(teamId: number): number {
+    private countWonForTeam(teamId: string): number {
         return this.matches.filter(m => this.winnerOfMatch(m) === teamId).length;
     }
 
-    private winnerOfMatch(match: Match): number {
+    private winnerOfMatch(match: Match): string {
         const winner = match.winner;
         if (winner != null) {
             return winner.id;
@@ -67,11 +67,11 @@ export class TableGeneratorService {
         return null;
     }
 
-    private countLostForTeam(teamId: number): number {
+    private countLostForTeam(teamId: string): number {
         return this.matches.filter(m => this.looserOfMatch(m) === teamId).length;
     }
 
-    private looserOfMatch(match: Match): number {
+    private looserOfMatch(match: Match): string {
         const looser = match.looser;
         if (looser != null) {
             return looser.id;
@@ -80,11 +80,11 @@ export class TableGeneratorService {
         return null;
     }
 
-    private countScoredForTeam(teamId: number): number {
+    private countScoredForTeam(teamId: string): number {
         return this.matches.map(m => this.scoredByTeamInMatch(teamId, m)).reduce((p, c) => p + c, 0);
     }
 
-    private scoredByTeamInMatch(teamId: number, match: Match) {
+    private scoredByTeamInMatch(teamId: string, match: Match) {
         if (match.isPlayed) {
             if (match.team1.id === teamId) {
                 return match.result.goals1;
@@ -97,11 +97,11 @@ export class TableGeneratorService {
         return 0;
     }
 
-    private countAgainstForTeam(teamId: number): number {
+    private countAgainstForTeam(teamId: string): number {
         return this.matches.map(m => this.againstTeamInMatch(teamId, m)).reduce((p, c) => p + c, 0);
     }
 
-    private againstTeamInMatch(teamId: number, match: Match) {
+    private againstTeamInMatch(teamId: string, match: Match) {
         if (match.isPlayed) {
             if (match.team1.id === teamId) {
                 return match.result.goals2;

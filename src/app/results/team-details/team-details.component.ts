@@ -14,7 +14,7 @@ export class TeamDetailsComponent implements OnInit {
 
     public activeTeam: Team = null;
 
-    private activeTeamId: number = null;
+    private activeTeamId: string = null;
 
     public loading = true;
 
@@ -34,14 +34,9 @@ export class TeamDetailsComponent implements OnInit {
     }
 
     private teamChange(params: ParamMap) {
-        this.activeTeamId = this.getParamNumber(params, 'team');
+        this.activeTeamId = params.get('team');
 
         this.initActiveTeam();
-    }
-
-    private getParamNumber(params: ParamMap, name: string): number {
-        const id = parseInt(params.get(name), 10);
-        return id > 0 ? id : null;
     }
 
     private initActiveTeam(): void {

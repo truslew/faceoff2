@@ -11,8 +11,8 @@ export class TableTeam {
     public goalDifference: number;
     public points: number;
 
-    public rank;
-    public sameRankId: number;
+    public rank: number;
+    public sameRankId: string;
 
     constructor(team: Team) {
         this.team = team;

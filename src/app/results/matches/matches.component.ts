@@ -18,7 +18,7 @@ export class MatchesComponent implements OnInit {
     public matches: Match[] = [];
 
     private activeClassId: string = null;
-    private activeGroupId: number = null;
+    private activeGroupId: string = null;
 
     public activeClass: AgeClass = null;
     public activeGroup: Group = null;
@@ -49,14 +49,9 @@ export class MatchesComponent implements OnInit {
 
     private groupChange(params: ParamMap) {
         this.activeClassId = params.get('class');
-        this.activeGroupId = this.getParamNumber(params, 'group');
+        this.activeGroupId = params.get('group');
 
         this.initActiveGroup();
-    }
-
-    private getParamNumber(params: ParamMap, name: string): number {
-        const id = parseInt(params.get(name), 10);
-        return id > 0 ? id : null;
     }
 
     private initActiveGroup(): void {

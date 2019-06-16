@@ -1,7 +1,7 @@
 import { Group } from './group';
 
 export class GroupLink {
-    public groupId: number;
+    public groupId: string;
     public rank: number;
 
     public group: Group;

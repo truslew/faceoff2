@@ -4,15 +4,17 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { AgeClass, AgeClassDaoEx } from '../models/ageClass';
-import { Group } from '../models/group';
+import { Group, GroupDaoEx } from '../models/group';
 import { GroupLink } from '../models/groupLink';
 import { Match } from '../models/match';
 import { MatchLink } from '../models/matchLink';
 import { MatchStatus, Result, ResultDao } from '../models/result';
-import { Team } from '../models/team';
+import { Team, TeamDaoEx } from '../models/team';
 import { TeamsDataContext } from '../models/teamsDataContext';
-import { RelationshipBuilder } from './relationship-builder';
 import { AgeClassService } from './age-class.service';
+import { GroupsService } from './groups.service';
+import { RelationshipBuilder } from './relationship-builder';
+import { TeamsService } from './teams.service';
 
 @Injectable({
     providedIn: 'root'
@@ -37,7 +39,13 @@ export class FaceoffDataService {
 
     public isHenning = new BehaviorSubject<boolean>(false);
 
-    constructor(angularFireAuth: AngularFireAuth, angularFireDatabase: AngularFireDatabase, private ageClassService: AgeClassService) {
+    constructor(
+        angularFireAuth: AngularFireAuth,
+        angularFireDatabase: AngularFireDatabase,
+        private ageClassService: AgeClassService,
+        private groupsService: GroupsService,
+        private teamsService: TeamsService
+    ) {
         this.angularFireAuth = angularFireAuth;
         this.angularFireDatabase = angularFireDatabase;
 
@@ -47,16 +55,8 @@ export class FaceoffDataService {
         });
 
         this.ageClassService.all().subscribe(data => this.ageClasses.next(this.mapAgeClass(data)));
-
-        this.angularFireDatabase
-            .list('/groups')
-            .valueChanges()
-            .subscribe(data => this.groups.next(this.mapGroups(data)));
-
-        this.angularFireDatabase
-            .list('/teams')
-            .valueChanges()
-            .subscribe(data => this.teams.next(this.mapTeam(data)));
+        this.groupsService.all().subscribe(data => this.groups.next(this.mapGroups(data)));
+        this.teamsService.all().subscribe(data => this.teams.next(this.mapTeams(data)));
 
         this.angularFireDatabase
             .list('/matches')
@@ -117,13 +117,13 @@ export class FaceoffDataService {
         return result;
     }
 
-    private mapGroups(data: any): Group[] {
+    private mapGroups(data: GroupDaoEx[]): Group[] {
         const result = data
             .map(d => {
                 const g = new Group();
                 g.id = d.id;
                 g.name = d.name;
-                g.ageClassId = '' + d.classId;
+                g.ageClassId = d.ageClassId;
                 return g;
             })
             .sort((t1, t2) => t1.name.localeCompare(t2.name));
@@ -131,11 +131,11 @@ export class FaceoffDataService {
         return result;
     }
 
-    private mapTeam(data: any): Team[] {
+    private mapTeams(data: TeamDaoEx[]): Team[] {
         const result = data.map(d => {
             const t = new Team();
             t.id = d.id;
-            t.groupId = this.toInt(d.groupId);
+            t.groupId = d.groupId;
             t.name = d.name;
             t.ident = d.ident;
             t.weight = d.weight;
@@ -155,9 +155,9 @@ export class FaceoffDataService {
         const t = new Match();
         t.id = data.id;
         t.ageClassId = data.classId;
-        t.groupId = this.toInt(data.groupId);
-        t.teamId1 = this.toInt(data.team1);
-        t.teamId2 = this.toInt(data.team2);
+        t.groupId = data.groupId;
+        t.teamId1 = data.team1;
+        t.teamId2 = data.team2;
         t.start = moment(data.start, moment.ISO_8601);
         t.t1 = data.t1;
         t.t2 = data.t2;
@@ -167,13 +167,13 @@ export class FaceoffDataService {
 
         if (data.groupLink1 != null) {
             t.groupLink1 = new GroupLink();
-            t.groupLink1.groupId = this.toInt(data.groupLink1.groupId);
+            t.groupLink1.groupId = data.groupLink1.groupId;
             t.groupLink1.rank = this.toInt(data.groupLink1.rank);
         }
 
         if (data.groupLink2 != null) {
             t.groupLink2 = new GroupLink();
-            t.groupLink2.groupId = this.toInt(data.groupLink2.groupId);
+            t.groupLink2.groupId = data.groupLink2.groupId;
             t.groupLink2.rank = this.toInt(data.groupLink2.rank);
         }
 

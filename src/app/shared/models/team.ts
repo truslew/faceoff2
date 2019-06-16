@@ -1,9 +1,10 @@
 import { Group } from './group';
+import { Ident } from './ident';
 import { Match } from './match';
 
 export class Team {
-    public id: number;
-    public groupId: number;
+    public id: string;
+    public groupId: string;
     public name: string;
     public ident: string;
 
@@ -13,3 +14,12 @@ export class Team {
 
     public matches: Match[];
 }
+
+export interface TeamDao {
+    groupId: string;
+    name: string;
+    ident: string;
+    weight: number;
+}
+
+export interface TeamDaoEx extends TeamDao, Ident {}

@@ -16,5 +16,4 @@ export interface AgeClassDao {
 }
 
 export interface AgeClassDaoEx extends AgeClassDao, Ident {
-    id: string;
 }

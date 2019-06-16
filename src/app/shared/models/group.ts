@@ -1,10 +1,11 @@
 import { AgeClass } from './ageClass';
-import { Team } from './team';
+import { Ident } from './ident';
 import { Match } from './match';
 import { TableTeam } from './tableTeam';
+import { Team } from './team';
 
 export class Group {
-    public id: number;
+    public id: string;
     public name: string;
     public ageClassId: string;
 
@@ -40,4 +41,13 @@ export class Group {
 
         return null;
     }
+}
+
+export interface GroupDao {
+    id: string;
+    name: string;
+    ageClassId: string;
+}
+
+export interface GroupDaoEx extends GroupDao, Ident {
 }
