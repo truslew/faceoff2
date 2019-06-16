@@ -2,7 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Match } from '../shared/models/match';
-import { Result, MatchStatus } from '../shared/models/result';
+import { Result } from '../shared/models/result';
+import { MatchStatus } from "../shared/models/MatchStatus";
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 import { TeamsDataContext } from '../shared/models/teamsDataContext';
 
@@ -11,7 +12,7 @@ import { TeamsDataContext } from '../shared/models/teamsDataContext';
     templateUrl: './match-play.component.html'
 })
 export class MatchPlayComponent implements OnInit {
-    private matchId: number = null;
+    private matchId: string = null;
     public matches: Match[] = [];
     public results: Result[] = [];
 
@@ -62,12 +63,7 @@ export class MatchPlayComponent implements OnInit {
     }
 
     private matchChange(params: ParamMap) {
-        this.matchId = this.getParamNumber(params, 'match');
-    }
-
-    private getParamNumber(params: ParamMap, name: string): number {
-        const id = parseInt(params.get(name), 10);
-        return id > 0 ? id : null;
+        this.matchId = params.get('match');
     }
 
     private dataLoaded(dataContext: TeamsDataContext): void {

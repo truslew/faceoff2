@@ -1,7 +1,8 @@
 import { Match } from './match';
+import { MatchStatus } from './MatchStatus';
 
 export interface ResultDao {
-    matchId: number;
+    matchId: string;
     status: string;
 
     goals1: number;
@@ -10,7 +11,7 @@ export interface ResultDao {
 
 export class Result {
     public key: string;
-    public matchId: number;
+    public matchId: string;
     public status: MatchStatus;
 
     public goals1: number;
@@ -28,10 +29,4 @@ export class Result {
                 return 'Uspilt';
         }
     }
-}
-
-export enum MatchStatus {
-    Unplayed,
-    Current,
-    Played
 }

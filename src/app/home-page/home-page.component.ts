@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Match } from '../shared/models/match';
-import { MatchStatus } from '../shared/models/result';
+import { MatchStatus } from "../shared/models/MatchStatus";
 import { TeamsDataContext } from '../shared/models/teamsDataContext';
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 

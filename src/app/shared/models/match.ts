@@ -3,11 +3,13 @@ import { Group } from './group';
 import { Team } from './team';
 import { GroupLink } from './groupLink';
 import { MatchLink } from './matchLink';
-import { Result, MatchStatus } from './result';
+import { Result } from './result';
+import { MatchStatus } from './MatchStatus';
 import * as moment from 'moment';
+import { Ident } from './ident';
 
 export class Match {
-    public id: number;
+    public id: string;
     public ageClassId: string;
     public groupId: string;
     public teamId1: string;
@@ -40,12 +42,7 @@ export class Match {
     }
 
     public get isPlayed(): boolean {
-        return (
-            this.result != null &&
-            this.result.status === MatchStatus.Played &&
-            this.result.goals1 != null &&
-            this.result.goals2 != null
-        );
+        return this.result != null && this.result.status === MatchStatus.Played && this.result.goals1 != null && this.result.goals2 != null;
     }
 
     public get winner(): Team {
@@ -125,10 +122,7 @@ export class Match {
     }
 
     public get showGoals(): boolean {
-        return (
-            this.result != null &&
-            (this.result.status === MatchStatus.Current || this.result.status === MatchStatus.Played)
-        );
+        return this.result != null && (this.result.status === MatchStatus.Current || this.result.status === MatchStatus.Played);
     }
 
     public get goal1Classes(): string {
@@ -153,3 +147,21 @@ export class Match {
         return this.result != null ? this.result.status : 0;
     }
 }
+
+export interface MatchDao {
+    ageClassId: string;
+    groupId: string;
+    teamId1: string;
+    teamId2: string;
+    start: any; // Java Timetsamp type
+
+    t1: string;
+    t2: string;
+
+    text1: string;
+    text2: string;
+
+    description: string;
+}
+
+export interface MatchDaoEx extends MatchDao, Ident {}

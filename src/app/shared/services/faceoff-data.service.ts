@@ -5,14 +5,14 @@ import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { AgeClass, AgeClassDaoEx } from '../models/ageClass';
 import { Group, GroupDaoEx } from '../models/group';
-import { GroupLink } from '../models/groupLink';
-import { Match } from '../models/match';
-import { MatchLink } from '../models/matchLink';
-import { MatchStatus, Result, ResultDao } from '../models/result';
+import { Match, MatchDaoEx } from '../models/match';
+import { MatchStatus } from '../models/MatchStatus';
+import { Result, ResultDao } from '../models/result';
 import { Team, TeamDaoEx } from '../models/team';
 import { TeamsDataContext } from '../models/teamsDataContext';
 import { AgeClassService } from './age-class.service';
 import { GroupsService } from './groups.service';
+import { MatchesService } from './matches.service';
 import { RelationshipBuilder } from './relationship-builder';
 import { TeamsService } from './teams.service';
 
@@ -44,7 +44,8 @@ export class FaceoffDataService {
         angularFireDatabase: AngularFireDatabase,
         private ageClassService: AgeClassService,
         private groupsService: GroupsService,
-        private teamsService: TeamsService
+        private teamsService: TeamsService,
+        private matchesServcie: MatchesService
     ) {
         this.angularFireAuth = angularFireAuth;
         this.angularFireDatabase = angularFireDatabase;
@@ -57,11 +58,7 @@ export class FaceoffDataService {
         this.ageClassService.all().subscribe(data => this.ageClasses.next(this.mapAgeClass(data)));
         this.groupsService.all().subscribe(data => this.groups.next(this.mapGroups(data)));
         this.teamsService.all().subscribe(data => this.teams.next(this.mapTeams(data)));
-
-        this.angularFireDatabase
-            .list('/matches')
-            .valueChanges()
-            .subscribe(data => this.matches.next(this.mapMatches(data)));
+        this.matchesServcie.all().subscribe(data => this.matches.next(this.mapMatches(data)));
 
         this.angularFireDatabase
             .list('/results')
@@ -145,47 +142,47 @@ export class FaceoffDataService {
         return result;
     }
 
-    private mapMatches(data: any): Match[] {
+    private mapMatches(data: MatchDaoEx[]): Match[] {
         const result = data.map(d => this.mapMatch(d)).sort((t1: Match, t2: Match) => t1.start.diff(t2.start, 'seconds'));
 
         return result;
     }
 
-    private mapMatch(data: any): Match {
+    private mapMatch(data: MatchDaoEx): Match {
         const t = new Match();
         t.id = data.id;
-        t.ageClassId = data.classId;
+        t.ageClassId = data.ageClassId;
         t.groupId = data.groupId;
-        t.teamId1 = data.team1;
-        t.teamId2 = data.team2;
-        t.start = moment(data.start, moment.ISO_8601);
+        t.teamId1 = data.teamId1;
+        t.teamId2 = data.teamId2;
+        t.start = moment(data.start.seconds*1000);
         t.t1 = data.t1;
         t.t2 = data.t2;
         t.text1 = data.text1;
         t.text2 = data.text2;
         t.description = data.description;
 
-        if (data.groupLink1 != null) {
-            t.groupLink1 = new GroupLink();
-            t.groupLink1.groupId = data.groupLink1.groupId;
-            t.groupLink1.rank = this.toInt(data.groupLink1.rank);
-        }
+        // if (data.groupLink1 != null) {
+        //     t.groupLink1 = new GroupLink();
+        //     t.groupLink1.groupId = data.groupLink1.groupId;
+        //     t.groupLink1.rank = this.toInt(data.groupLink1.rank);
+        // }
 
-        if (data.groupLink2 != null) {
-            t.groupLink2 = new GroupLink();
-            t.groupLink2.groupId = data.groupLink2.groupId;
-            t.groupLink2.rank = this.toInt(data.groupLink2.rank);
-        }
+        // if (data.groupLink2 != null) {
+        //     t.groupLink2 = new GroupLink();
+        //     t.groupLink2.groupId = data.groupLink2.groupId;
+        //     t.groupLink2.rank = this.toInt(data.groupLink2.rank);
+        // }
 
-        if (data.matchLink1 != null) {
-            t.matchLink1 = new MatchLink();
-            t.matchLink1.matchId = this.toInt(data.matchLink1.matchId);
-        }
+        // if (data.matchLink1 != null) {
+        //     t.matchLink1 = new MatchLink();
+        //     t.matchLink1.matchId = data.matchLink1.matchId;
+        // }
 
-        if (data.matchLink2 != null) {
-            t.matchLink2 = new MatchLink();
-            t.matchLink2.matchId = this.toInt(data.matchLink2.matchId);
-        }
+        // if (data.matchLink2 != null) {
+        //     t.matchLink2 = new MatchLink();
+        //     t.matchLink2.matchId = data.matchLink2.matchId;
+        // }
 
         return t;
     }
@@ -200,7 +197,7 @@ export class FaceoffDataService {
         const result = new Result();
         result.key = data.$key;
 
-        result.matchId = this.toInt(data.matchId);
+        result.matchId = data.matchId;
         result.status = this.getStatusFromChar(data.status);
         result.goals1 = this.toInt(data.goals1);
         result.goals2 = this.toInt(data.goals2);
@@ -212,7 +209,7 @@ export class FaceoffDataService {
         return Number.isInteger(result) ? result : null;
     }
 
-    public saveResult(matchId: number, goals1: number, goals2: number, status: MatchStatus): void {
+    public saveResult(matchId: string, goals1: number, goals2: number, status: MatchStatus): void {
         const data: ResultDao = {
             matchId,
             goals1,

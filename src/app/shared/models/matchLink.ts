@@ -1,7 +1,7 @@
 import { Match } from './match';
 
 export class MatchLink {
-    matchId: number;
+    matchId: string;
     match: Match;
 
     public get isValid(): boolean {
