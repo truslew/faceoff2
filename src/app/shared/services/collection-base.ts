@@ -56,10 +56,6 @@ export class CollectionBase<T, TEx extends Ident> {
     public addWithId(sponsor: TEx): Observable<TEx> {
         const { id, ...data } = sponsor;
         const doc = this.collection().doc(id);
-        return from(doc.set(data)).pipe(
-            map(() => {
-                return sponsor;
-            })
-        );
+        return from(doc.set(data)).pipe(map(() => sponsor));
     }
 }

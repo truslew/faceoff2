@@ -16,6 +16,7 @@ import { MatchesService } from './matches.service';
 import { RelationshipBuilder } from './relationship-builder';
 import { TeamsService } from './teams.service';
 import { ResultsService } from './results.service';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -199,18 +200,14 @@ export class FaceoffDataService {
     }
 
     public saveResult(matchId: string, goals1: number, goals2: number, status: MatchStatus): void {
-        const data: ResultDao = {
+        const data: ResultDaoEx = {
             id: matchId,
             goals1,
             goals2,
             status: this.getStatusChar(status)
         };
 
-        try {
-            this.angularFireDatabase.list('/results').set(`${matchId}`, data);
-        } catch (error) {
-            console.error(error);
-        }
+        this.resultsService.addWithId(data).subscribe(() => console.log('Saved'), err => console.error(err));
     }
 
     private getStatusFromChar(char: string): MatchStatus {
