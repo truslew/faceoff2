@@ -70,7 +70,7 @@ export class RelationshipBuilder {
     }
 
     private ageClassAddTeams(c: AgeClass): void {
-        c.teams = _.sortBy(_.flatten(c.groups.map(g => g.teams)), (t: Team) => t.name);
+        c.teams = this.teams.filter(t => t.ageClassId === c.id).sort((t1, t2) => t1.name.localeCompare(t2.name));
     }
 
     private groupsAddTeams(): void {
@@ -78,11 +78,9 @@ export class RelationshipBuilder {
     }
 
     private groupAddTeams(group: Group): void {
-        group.teams = this.teams
-            .filter(t => t.groupId === group.id)
-            .sort((t1: Team, t2: Team) => t1.name.localeCompare(t2.name));
+        group.teams = this.teams.filter(t => t.groupId === group.id).sort((t1, t2) => t1.name.localeCompare(t2.name));
 
-        group.teams.forEach((t: Team) => (t.group = group));
+        group.teams.forEach(t => (t.group = group));
     }
 
     private groupsAddMatches(): void {
@@ -90,9 +88,7 @@ export class RelationshipBuilder {
     }
 
     private groupAddMatches(group: Group): void {
-        group.matches = this.matches
-            .filter(t => t.groupId === group.id)
-            .sort((t1: Match, t2: Match) => t1.start.diff(t2.start, 'seconds'));
+        group.matches = this.matches.filter(t => t.groupId === group.id).sort((t1: Match, t2: Match) => t1.start.diff(t2.start, 'seconds'));
 
         group.matches.forEach((m: Match) => (m.group = group));
     }

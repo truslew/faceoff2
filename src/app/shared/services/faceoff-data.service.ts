@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireDatabase } from '@angular/fire/database';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { AgeClass, AgeClassDaoEx } from '../models/ageClass';
@@ -23,9 +22,6 @@ import { TeamsService } from './teams.service';
     providedIn: 'root'
 })
 export class FaceoffDataService {
-    private angularFireAuth: AngularFireAuth;
-    private angularFireDatabase: AngularFireDatabase;
-
     private builder = new RelationshipBuilder();
 
     public ageClasses = new BehaviorSubject<AgeClass[]>([]);
@@ -43,16 +39,13 @@ export class FaceoffDataService {
     public isHenning = new BehaviorSubject<boolean>(false);
 
     constructor(
-        angularFireAuth: AngularFireAuth,
-        angularFireDatabase: AngularFireDatabase,
+        private angularFireAuth: AngularFireAuth,
         private ageClassService: AgeClassService,
         private groupsService: GroupsService,
         private teamsService: TeamsService,
         private matchesServcie: MatchesService,
         private resultsService: ResultsService
     ) {
-        this.angularFireAuth = angularFireAuth;
-        this.angularFireDatabase = angularFireDatabase;
 
         this.angularFireAuth.authState.subscribe(auth => {
             this.authenticated.next(auth != null);
@@ -127,6 +120,7 @@ export class FaceoffDataService {
         const result = data.map(d => {
             const t = new Team();
             t.id = d.id;
+            t.ageClassId = d.ageClassId;
             t.groupId = d.groupId;
             t.name = d.name;
             t.ident = d.ident;

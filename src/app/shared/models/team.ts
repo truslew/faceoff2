@@ -4,6 +4,7 @@ import { Match } from './match';
 
 export class Team {
     public id: string;
+    public ageClassId: string;
     public groupId: string;
     public name: string;
     public ident: string;
@@ -16,6 +17,7 @@ export class Team {
 }
 
 export interface TeamDao {
+    ageClassId: string;
     groupId: string;
     name: string;
     ident: string;
