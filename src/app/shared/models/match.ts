@@ -1,8 +1,8 @@
 import { AgeClass } from './ageClass';
 import { Group } from './group';
 import { Team } from './team';
-import { GroupLink } from './groupLink';
-import { MatchLink } from './matchLink';
+import { GroupLink, GroupLinkDao } from './groupLink';
+import { MatchLink, MatchLinkDao } from './matchLink';
 import { Result } from './result';
 import { MatchStatus } from './MatchStatus';
 import * as moment from 'moment';
@@ -160,6 +160,12 @@ export interface MatchDao {
 
     text1: string;
     text2: string;
+
+    groupLink1: GroupLinkDao;
+    groupLink2: GroupLinkDao;
+
+    matchLink1: MatchLinkDao;
+    matchLink2: MatchLinkDao;
 
     description: string;
 }

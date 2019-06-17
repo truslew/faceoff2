@@ -10,3 +10,8 @@ export class GroupLink {
         return this.group != null && this.rank != null;
     }
 }
+
+export interface GroupLinkDao {
+    groupId: string;
+    rank: number;
+}

@@ -8,3 +8,8 @@ export class MatchLink {
         return this.match != null;
     }
 }
+
+export interface MatchLinkDao {
+    matchId: string;
+
+}

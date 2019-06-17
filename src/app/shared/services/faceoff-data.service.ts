@@ -5,18 +5,19 @@ import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { AgeClass, AgeClassDaoEx } from '../models/ageClass';
 import { Group, GroupDaoEx } from '../models/group';
+import { GroupLink } from '../models/groupLink';
 import { Match, MatchDaoEx } from '../models/match';
+import { MatchLink } from '../models/matchLink';
 import { MatchStatus } from '../models/MatchStatus';
-import { Result, ResultDao, ResultDaoEx } from '../models/result';
+import { Result, ResultDaoEx } from '../models/result';
 import { Team, TeamDaoEx } from '../models/team';
 import { TeamsDataContext } from '../models/teamsDataContext';
 import { AgeClassService } from './age-class.service';
 import { GroupsService } from './groups.service';
 import { MatchesService } from './matches.service';
 import { RelationshipBuilder } from './relationship-builder';
-import { TeamsService } from './teams.service';
 import { ResultsService } from './results.service';
-import { switchMap } from 'rxjs/operators';
+import { TeamsService } from './teams.service';
 
 @Injectable({
     providedIn: 'root'
@@ -155,27 +156,27 @@ export class FaceoffDataService {
         t.text2 = data.text2;
         t.description = data.description;
 
-        // if (data.groupLink1 != null) {
-        //     t.groupLink1 = new GroupLink();
-        //     t.groupLink1.groupId = data.groupLink1.groupId;
-        //     t.groupLink1.rank = this.toInt(data.groupLink1.rank);
-        // }
+        if (data.groupLink1 != null) {
+            t.groupLink1 = new GroupLink();
+            t.groupLink1.groupId = data.groupLink1.groupId;
+            t.groupLink1.rank = this.toInt(data.groupLink1.rank);
+        }
 
-        // if (data.groupLink2 != null) {
-        //     t.groupLink2 = new GroupLink();
-        //     t.groupLink2.groupId = data.groupLink2.groupId;
-        //     t.groupLink2.rank = this.toInt(data.groupLink2.rank);
-        // }
+        if (data.groupLink2 != null) {
+            t.groupLink2 = new GroupLink();
+            t.groupLink2.groupId = data.groupLink2.groupId;
+            t.groupLink2.rank = this.toInt(data.groupLink2.rank);
+        }
 
-        // if (data.matchLink1 != null) {
-        //     t.matchLink1 = new MatchLink();
-        //     t.matchLink1.matchId = data.matchLink1.matchId;
-        // }
+        if (data.matchLink1 != null) {
+            t.matchLink1 = new MatchLink();
+            t.matchLink1.matchId = data.matchLink1.matchId;
+        }
 
-        // if (data.matchLink2 != null) {
-        //     t.matchLink2 = new MatchLink();
-        //     t.matchLink2.matchId = data.matchLink2.matchId;
-        // }
+        if (data.matchLink2 != null) {
+            t.matchLink2 = new MatchLink();
+            t.matchLink2.matchId = data.matchLink2.matchId;
+        }
 
         return t;
     }
