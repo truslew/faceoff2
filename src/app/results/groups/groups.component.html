@@ -2,7 +2,7 @@
     <h1 class="display-3 text-white">Gruppe inndeling</h1>
 </div>
 
-<div *ngIf="loading;then lodingTemplate else loadedTemplate"></div>
+<div *ngIf="loading; then lodingTemplate; else loadedTemplate"></div>
 
 <ng-template #lodingTemplate>
     <div class="row justify-content-center">
@@ -17,13 +17,13 @@
         <div class="col-md-6 col-12 mb-2" *ngFor="let group of groups">
             <div class="card">
                 <div class="card-header alert-danger">
-                    <h2>{{group.name}}</h2>
+                    <h2>{{ group.name }}</h2>
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" *ngFor="let team of group.teams">
-                            <a [routerLink]="['/lag-detaljer', {team: team.id}]">
-                                {{team.name}}
+                            <a [routerLink]="['/lag-detaljer', { team: team.id }]">
+                                {{ team.name }}
                             </a>
                         </li>
                     </ul>
