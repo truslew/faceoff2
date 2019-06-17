@@ -150,7 +150,7 @@ export class RelationshipBuilder {
     }
 
     public matchesAddResult(): void {
-        this.matches.forEach(m => (m.result = this.results.find(r => r.matchId === m.id)));
+        this.matches.forEach(m => (m.result = this.results.find(r => r.id === m.id)));
     }
 
     private groupsAddTable(): void {

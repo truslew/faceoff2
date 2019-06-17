@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Match } from '../shared/models/match';
 import { Result } from '../shared/models/result';
-import { MatchStatus } from "../shared/models/MatchStatus";
+import { MatchStatus } from '../shared/models/MatchStatus';
 import { FaceoffDataService } from '../shared/services/faceoff-data.service';
 import { TeamsDataContext } from '../shared/models/teamsDataContext';
 
@@ -56,7 +56,7 @@ export class MatchPlayComponent implements OnInit {
 
     public getResult(): Result {
         if (this.matchId != null) {
-            return this.results.find(c => c.matchId === this.matchId);
+            return this.results.find(c => c.id === this.matchId);
         }
 
         return null;

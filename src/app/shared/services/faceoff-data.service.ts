@@ -7,7 +7,7 @@ import { AgeClass, AgeClassDaoEx } from '../models/ageClass';
 import { Group, GroupDaoEx } from '../models/group';
 import { Match, MatchDaoEx } from '../models/match';
 import { MatchStatus } from '../models/MatchStatus';
-import { Result, ResultDao } from '../models/result';
+import { Result, ResultDao, ResultDaoEx } from '../models/result';
 import { Team, TeamDaoEx } from '../models/team';
 import { TeamsDataContext } from '../models/teamsDataContext';
 import { AgeClassService } from './age-class.service';
@@ -15,6 +15,7 @@ import { GroupsService } from './groups.service';
 import { MatchesService } from './matches.service';
 import { RelationshipBuilder } from './relationship-builder';
 import { TeamsService } from './teams.service';
+import { ResultsService } from './results.service';
 
 @Injectable({
     providedIn: 'root'
@@ -45,7 +46,8 @@ export class FaceoffDataService {
         private ageClassService: AgeClassService,
         private groupsService: GroupsService,
         private teamsService: TeamsService,
-        private matchesServcie: MatchesService
+        private matchesServcie: MatchesService,
+        private resultsService: ResultsService
     ) {
         this.angularFireAuth = angularFireAuth;
         this.angularFireDatabase = angularFireDatabase;
@@ -59,16 +61,7 @@ export class FaceoffDataService {
         this.groupsService.all().subscribe(data => this.groups.next(this.mapGroups(data)));
         this.teamsService.all().subscribe(data => this.teams.next(this.mapTeams(data)));
         this.matchesServcie.all().subscribe(data => this.matches.next(this.mapMatches(data)));
-
-        this.angularFireDatabase
-            .list('/results')
-            .valueChanges()
-            .subscribe(data => this.results.next(this.mapResults(data)));
-
-        this.angularFireDatabase
-            .object('.info/connected')
-            .valueChanges()
-            .subscribe(x => console.log(x));
+        this.resultsService.all().subscribe(data => this.results.next(this.mapResults(data)));
 
         this.ageClasses.subscribe(data => {
             this.builder.ageClasses = data;
@@ -144,7 +137,6 @@ export class FaceoffDataService {
 
     private mapMatches(data: MatchDaoEx[]): Match[] {
         const result = data.map(d => this.mapMatch(d)).sort((t1: Match, t2: Match) => t1.start.diff(t2.start, 'seconds'));
-
         return result;
     }
 
@@ -155,7 +147,7 @@ export class FaceoffDataService {
         t.groupId = data.groupId;
         t.teamId1 = data.teamId1;
         t.teamId2 = data.teamId2;
-        t.start = moment(data.start.seconds*1000);
+        t.start = moment(data.start.seconds * 1000);
         t.t1 = data.t1;
         t.t2 = data.t2;
         t.text1 = data.text1;
@@ -187,17 +179,14 @@ export class FaceoffDataService {
         return t;
     }
 
-    private mapResults(data: any): Result[] {
+    private mapResults(data: ResultDaoEx[]): Result[] {
         const result = data.map(d => this.mapResult(d));
-
         return result;
     }
 
-    private mapResult(data: any): Result {
+    private mapResult(data: ResultDaoEx): Result {
         const result = new Result();
-        result.key = data.$key;
-
-        result.matchId = data.matchId;
+        result.id = data.id;
         result.status = this.getStatusFromChar(data.status);
         result.goals1 = this.toInt(data.goals1);
         result.goals2 = this.toInt(data.goals2);
@@ -211,7 +200,7 @@ export class FaceoffDataService {
 
     public saveResult(matchId: string, goals1: number, goals2: number, status: MatchStatus): void {
         const data: ResultDao = {
-            matchId,
+            id: matchId,
             goals1,
             goals2,
             status: this.getStatusChar(status)

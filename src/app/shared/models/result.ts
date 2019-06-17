@@ -1,17 +1,9 @@
 import { Match } from './match';
 import { MatchStatus } from './MatchStatus';
-
-export interface ResultDao {
-    matchId: string;
-    status: string;
-
-    goals1: number;
-    goals2: number;
-}
+import { Ident } from './ident';
 
 export class Result {
-    public key: string;
-    public matchId: string;
+    public id: string;
     public status: MatchStatus;
 
     public goals1: number;
@@ -30,3 +22,13 @@ export class Result {
         }
     }
 }
+
+export interface ResultDao {
+    id: string;
+    status: string;
+
+    goals1: number;
+    goals2: number;
+}
+
+export interface ResultDaoEx extends ResultDao, Ident {}
