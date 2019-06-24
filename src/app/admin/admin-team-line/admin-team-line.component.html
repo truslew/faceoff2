@@ -1,0 +1,19 @@
+<div class="row my-2 ">
+    <div class="col-1 align-self-center">
+        <a class="btn btn-primary" [routerLink]="['../team-edit', team.id]">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div class="col-1 align-self-center">
+        {{ team.id }}
+    </div>
+    <div class="col-4 align-self-center">
+        {{ team.name }}
+    </div>
+    <div class="col-3 align-self-center">
+        {{ ageClass?.name }}
+    </div>
+    <div class="col-3 align-self-center">
+        {{ group?.name }}
+    </div>
+</div>

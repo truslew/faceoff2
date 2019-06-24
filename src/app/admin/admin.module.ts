@@ -8,6 +8,8 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminTeamEditComponent } from './admin-team-edit/admin-team-edit.component';
 import { AdminTeamNewComponent } from './admin-team-new/admin-team-new.component';
 import { AdminTeamsPageComponent } from './admin-teams-page/admin-teams-page.component';
+import { AdminTeamViewComponent } from './admin-team-view/admin-team-view.component';
+import { AdminTeamLineComponent } from './admin-team-line/admin-team-line.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { AdminTeamsPageComponent } from './admin-teams-page/admin-teams-page.com
         AdminTeamEditComponent,
         AdminTeamNewComponent,
         AdminMatchNewComponent,
-        AdminMatchEditComponent
+        AdminMatchEditComponent,
+        AdminTeamViewComponent,
+        AdminTeamLineComponent
     ],
     imports: [CommonModule, AdminRoutingModule, SharedModule]
 })

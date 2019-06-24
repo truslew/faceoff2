@@ -1,3 +1,7 @@
-<p>
-  admin-teams-page works!
-</p>
+<div *ngFor="let team of teams">
+    <app-admin-team-line [team]="team"></app-admin-team-line>
+</div>
+
+<hr/>
+
+<a class="btn btn-primary" routerLink="../team-new">New team</a>
