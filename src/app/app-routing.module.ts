@@ -22,6 +22,10 @@ const routes: Routes = [
     { path: 'reglement', component: ReglementComponent },
     { path: 'login', component: EmailComponent },
     { path: 'match-play', component: MatchPlayComponent },
+    {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then(mod => mod.AdminModule)
+    },
     { path: '', redirectTo: 'hjem', pathMatch: 'full' },
     { path: '**', redirectTo: 'hjem', pathMatch: 'full' }
 ];

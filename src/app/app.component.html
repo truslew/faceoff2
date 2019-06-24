@@ -34,6 +34,14 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/reglement">Reglement</a>
                 </li>
+                <ng-container *ngIf="true">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/admin/teams">Teams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/admin/matches">Matches</a>
+                    </li>
+                </ng-container>
             </ul>
             <ul class="navbar-nav my-2 my-lg-0">
                 <li class="nav-item active" *ngIf="!name">
