@@ -140,7 +140,7 @@ export class AdminTeamViewComponent extends TakeUntilBase implements OnInit {
 
     public get identValue(): string {
         const ident = this.ident;
-        return ident != null ? ident.value : null;
+        return ident != null ? (ident.value as string ).toLocaleUpperCase() : null;
     }
 
     public get identInvalid(): boolean {
