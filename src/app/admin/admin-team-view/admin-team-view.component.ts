@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { combineLatest, ReplaySubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 import { AgeClassDaoEx } from 'src/app/shared/models/ageClass';
 import { GroupDaoEx } from 'src/app/shared/models/group';
 import { TeamDao, TeamDaoEx } from 'src/app/shared/models/team';
@@ -42,10 +42,12 @@ export class AdminTeamViewComponent extends TakeUntilBase implements OnInit {
     }
 
     ngOnInit() {
+        this.loadStatus.loadingStart();
+
         this.initForm();
-        combineLatest(this.team$, this.ageClassService.all(), this.groupService.all())
+        combineLatest(this.team$.pipe(filter(t => t != null)), this.ageClassService.all(), this.groupService.all())
             .pipe(takeUntil(this.destroy$))
-            .subscribe(([t, a, g]) => this.updateData(t, a, g));
+            .subscribe(([t, a, g]) => this.updateData(t, a, g), err => this.handleError(err));
     }
 
     public get filteredGroups(): GroupDaoEx[] {
@@ -79,6 +81,12 @@ export class AdminTeamViewComponent extends TakeUntilBase implements OnInit {
             ageClass: ageClass || null,
             group: group || null
         });
+
+        this.loadStatus.loadingSuccess();
+    }
+
+    private handleError(error: any): void {
+        this.loadStatus.loadingError('Loading failed, try again');
     }
 
     public get name(): AbstractControl {
@@ -133,6 +141,8 @@ export class AdminTeamViewComponent extends TakeUntilBase implements OnInit {
             return;
         }
 
+        this.loadStatus.savingStart('Saving Team');
+
         const team: TeamDao = {
             name: this.nameValue,
             ageClassId: this.ageClassValue != null ? this.ageClassValue.id : null,
@@ -143,9 +153,18 @@ export class AdminTeamViewComponent extends TakeUntilBase implements OnInit {
 
         if (this.teamId != null) {
             const t = { id: this.teamId, ...team };
-            this.teamsService.addWithId(t).subscribe(() => console.log('Saved'), err => console.log(err));
+            this.teamsService.addWithId(t).subscribe(() => this.handleSaveSuccess(), e => this.handleSaveError(e));
         } else {
-            this.teamsService.add(team).subscribe();
+            this.teamsService.add(team).subscribe(() => this.handleSaveSuccess(), e => this.handleSaveError(e));
         }
+    }
+
+    private handleSaveSuccess(): void {
+        this.teamForm.markAsPristine();
+        this.loadStatus.savingSuccess('Team Saved');
+    }
+
+    private handleSaveError(error: any): void {
+        this.loadStatus.savingError();
     }
 }
