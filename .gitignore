@@ -37,3 +37,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+admin-scrips/node_modules
+functions
+faceoff-dev-firebase-adminsdk-3pfpx-62418226cc.json
+*.cache
