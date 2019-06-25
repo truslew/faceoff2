@@ -24,7 +24,6 @@ export class Result {
 }
 
 export interface ResultDao {
-    id: string;
     status: string;
 
     goals1: number;

@@ -8,7 +8,7 @@ import { GroupLink } from '../models/groupLink';
 import { Match, MatchDaoEx } from '../models/match';
 import { MatchLink } from '../models/matchLink';
 import { MatchStatus } from '../models/MatchStatus';
-import { Result, ResultDaoEx } from '../models/result';
+import { Result, ResultDaoEx, ResultDao } from '../models/result';
 import { Team, TeamDaoEx } from '../models/team';
 import { TeamsDataContext } from '../models/teamsDataContext';
 import { AgeClassService } from './age-class.service';
@@ -195,14 +195,13 @@ export class FaceoffDataService {
     }
 
     public saveResult(matchId: string, goals1: number, goals2: number, status: MatchStatus): void {
-        const data: ResultDaoEx = {
-            id: matchId,
+        const data: ResultDao = {
             goals1,
             goals2,
             status: this.getStatusChar(status)
         };
 
-        this.resultsService.addWithId(data).subscribe(() => console.log('Saved'), err => console.error(err));
+        this.resultsService.addWithId(matchId, data).subscribe(() => console.log('Saved'), err => console.error(err));
     }
 
     private getStatusFromChar(char: string): MatchStatus {

@@ -60,11 +60,15 @@ export class AdminTeamViewComponent extends TakeUntilBase implements OnInit {
 
         const ageClassControl = new FormControl(null, [Validators.required]);
         const groupControl = new FormControl(null, [Validators.required]);
+        const identControl = new FormControl(null, [Validators.maxLength(1)]);
+        const weightControl = new FormControl(null, [Validators.required, Validators.min(0), Validators.max(100)]);
 
         this.teamForm = this.fb.group({
             name: nameControl,
             ageClass: ageClassControl,
-            group: groupControl
+            group: groupControl,
+            ident: identControl,
+            weight: weightControl
         });
     }
 
@@ -79,7 +83,9 @@ export class AdminTeamViewComponent extends TakeUntilBase implements OnInit {
         this.teamForm.reset({
             name: t.name,
             ageClass: ageClass || null,
-            group: group || null
+            group: group || null,
+            ident: t.ident,
+            weight: t.weight || 0
         });
 
         this.loadStatus.loadingSuccess();
@@ -128,6 +134,32 @@ export class AdminTeamViewComponent extends TakeUntilBase implements OnInit {
         return this.group.invalid && this.group.touched;
     }
 
+    public get ident(): AbstractControl {
+        return this.teamForm.get('ident');
+    }
+
+    public get identValue(): string {
+        const ident = this.ident;
+        return ident != null ? ident.value : null;
+    }
+
+    public get identInvalid(): boolean {
+        return this.ident.invalid && this.ident.touched;
+    }
+
+    public get weight(): AbstractControl {
+        return this.teamForm.get('weight');
+    }
+
+    public get weightValue(): number {
+        const weight = this.weight;
+        return weight != null ? Number.parseInt(weight.value, 10) : null;
+    }
+
+    public get weightInvalid(): boolean {
+        return this.weight.invalid && this.weight.touched;
+    }
+
     public get disableSave(): boolean {
         return this.teamForm.pristine || this.teamForm.invalid;
     }
@@ -147,13 +179,12 @@ export class AdminTeamViewComponent extends TakeUntilBase implements OnInit {
             name: this.nameValue,
             ageClassId: this.ageClassValue != null ? this.ageClassValue.id : null,
             groupId: this.groupValue != null ? this.groupValue.id : null,
-            ident: null,
-            weight: 0
+            ident: this.identValue,
+            weight: this.weightValue
         };
 
         if (this.teamId != null) {
-            const t = { id: this.teamId, ...team };
-            this.teamsService.addWithId(t).subscribe(() => this.handleSaveSuccess(), e => this.handleSaveError(e));
+            this.teamsService.addWithId(this.teamId, team).subscribe(() => this.handleSaveSuccess(), e => this.handleSaveError(e));
         } else {
             this.teamsService.add(team).subscribe(() => this.handleSaveSuccess(), e => this.handleSaveError(e));
         }
