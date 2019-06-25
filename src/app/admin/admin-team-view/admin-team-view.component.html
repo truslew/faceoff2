@@ -1,3 +1,52 @@
-<p>
-  admin-team-view works!
-</p>
+<form [formGroup]="teamForm">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="card mt-1">
+                <div class="card-header">
+                    Team
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            placeholder="Name"
+                            formControlName="name"
+                            [ngClass]="{ 'is-invalid': nameInvalid }"
+                        />
+                        <div *ngIf="nameInvalid" class="invalid-feedback">
+                            Name must be set
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ageClass">Age Class</label>
+                        <select class="form-control" id="ageClass" formControlName="ageClass" [ngClass]="{ 'is-invalid': ageClassInvalid }">
+                            <option value="null" selected>-- Choose --</option>
+                            <option *ngFor="let sp of ageClasses" [ngValue]="sp">{{ sp.name }}</option>
+                        </select>
+                        <div *ngIf="ageClassInvalid" class="invalid-feedback">
+                            Age class must be set
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group">Group</label>
+                        <select class="form-control" id="group" formControlName="group">
+                            <option value="null" selected>-- Choose --</option>
+                            <option *ngFor="let r of filteredGroups" [ngValue]="r">{{ r.name }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-12">
+            <button class="btn btn-primary" [disabled]="disableSave" (click)="save()">Save</button>
+        </div>
+    </div>
+</form>
