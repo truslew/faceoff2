@@ -1,19 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { combineLatest, Subject, ReplaySubject } from 'rxjs';
+import { combineLatest, ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AgeClassDaoEx } from 'src/app/shared/models/ageClass';
 import { GroupDaoEx } from 'src/app/shared/models/group';
-import { TeamDaoEx, TeamDao } from 'src/app/shared/models/team';
+import { TeamDao, TeamDaoEx } from 'src/app/shared/models/team';
 import { AgeClassService } from 'src/app/shared/services/age-class.service';
 import { GroupsService } from 'src/app/shared/services/groups.service';
 import { TeamsService } from 'src/app/shared/services/teams.service';
+import { LoadingStatusService } from '../services/loading-status.service';
+import { TakeUntilBase } from '../TakeUntilBase';
 
 @Component({
     selector: 'app-admin-team-view',
     templateUrl: './admin-team-view.component.html',
     styleUrls: ['./admin-team-view.component.scss']
 })
-export class AdminTeamViewComponent implements OnInit {
+export class AdminTeamViewComponent extends TakeUntilBase implements OnInit {
     @Input()
     public set team(value: TeamDaoEx) {
         this.team$.next(value);
@@ -32,12 +35,17 @@ export class AdminTeamViewComponent implements OnInit {
         private fb: FormBuilder,
         private teamsService: TeamsService,
         private ageClassService: AgeClassService,
-        private groupService: GroupsService
-    ) {}
+        private groupService: GroupsService,
+        public loadStatus: LoadingStatusService
+    ) {
+        super();
+    }
 
     ngOnInit() {
         this.initForm();
-        combineLatest(this.team$, this.ageClassService.all(), this.groupService.all()).subscribe(([t, a, g]) => this.updateData(t, a, g));
+        combineLatest(this.team$, this.ageClassService.all(), this.groupService.all())
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(([t, a, g]) => this.updateData(t, a, g));
     }
 
     public get filteredGroups(): GroupDaoEx[] {

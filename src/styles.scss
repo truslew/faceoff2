@@ -8,7 +8,7 @@ $card-border-color: $aibk-dark-red;
 // $border-radius-lg: 0;
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
-
+@import '~ngx-toastr/toastr-bs4-alert';
 
 @include bg-variant('.bg-aibk', $aibk-dark-red);
 

@@ -1,21 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
 import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TeamDaoEx } from 'src/app/shared/models/team';
 import { TeamsService } from 'src/app/shared/services/teams.service';
+import { TakeUntilBase } from '../TakeUntilBase';
 
 @Component({
     selector: 'app-admin-team-edit',
     templateUrl: './admin-team-edit.component.html',
     styleUrls: ['./admin-team-edit.component.scss']
 })
-export class AdminTeamEditComponent implements OnInit, OnDestroy {
+export class AdminTeamEditComponent extends TakeUntilBase implements OnInit {
     public team: TeamDaoEx;
 
-    private destroy$ = new Subject<boolean>();
 
-    constructor(private teamService: TeamsService, private route: ActivatedRoute, private router: Router) {}
+    constructor(private teamService: TeamsService, private route: ActivatedRoute, private router: Router) {
+        super()
+    }
 
     ngOnInit() {
         this.route.paramMap
@@ -26,11 +27,6 @@ export class AdminTeamEditComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$)
             )
             .subscribe(s => this.setData(s));
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next(true);
-        this.destroy$.unsubscribe();
     }
 
     private setData(team: TeamDaoEx): void {
