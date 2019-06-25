@@ -3,9 +3,10 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { combineLatest, Subject, ReplaySubject } from 'rxjs';
 import { AgeClassDaoEx } from 'src/app/shared/models/ageClass';
 import { GroupDaoEx } from 'src/app/shared/models/group';
-import { TeamDaoEx } from 'src/app/shared/models/team';
+import { TeamDaoEx, TeamDao } from 'src/app/shared/models/team';
 import { AgeClassService } from 'src/app/shared/services/age-class.service';
 import { GroupsService } from 'src/app/shared/services/groups.service';
+import { TeamsService } from 'src/app/shared/services/teams.service';
 
 @Component({
     selector: 'app-admin-team-view',
@@ -27,7 +28,12 @@ export class AdminTeamViewComponent implements OnInit {
 
     private teamId: string;
 
-    constructor(private fb: FormBuilder, private ageClassService: AgeClassService, private groupService: GroupsService) {}
+    constructor(
+        private fb: FormBuilder,
+        private teamsService: TeamsService,
+        private ageClassService: AgeClassService,
+        private groupService: GroupsService
+    ) {}
 
     ngOnInit() {
         this.initForm();
@@ -117,6 +123,21 @@ export class AdminTeamViewComponent implements OnInit {
     public save(): void {
         if (!this.formInvalid) {
             return;
+        }
+
+        const team: TeamDao = {
+            name: this.nameValue,
+            ageClassId: this.ageClassValue != null ? this.ageClassValue.id : null,
+            groupId: this.groupValue != null ? this.groupValue.id : null,
+            ident: null,
+            weight: 0
+        };
+
+        if (this.teamId != null) {
+            const t = { id: this.teamId, ...team };
+            this.teamsService.addWithId(t).subscribe(() => console.log('Saved'), err => console.log(err));
+        } else {
+            this.teamsService.add(team).subscribe();
         }
     }
 }
