@@ -144,8 +144,8 @@ export class FaceoffDataService {
         t.teamId1 = data.teamId1;
         t.teamId2 = data.teamId2;
         t.start = moment(data.start.seconds * 1000);
-        t.t1 = data.t1;
-        t.t2 = data.t2;
+        t.t1 = data.ident1;
+        t.t2 = data.ident2;
         t.text1 = data.text1;
         t.text2 = data.text2;
         t.description = data.description;

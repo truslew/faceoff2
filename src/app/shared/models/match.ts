@@ -152,12 +152,12 @@ export interface MatchDao {
     matchNo: number;
     ageClassId: string;
     groupId: string;
-    teamId1: string;
-    teamId2: string;
-    start: any; // Java Timetsamp type
+    teamId1?: string;
+    teamId2?: string;
+    start: any; // Java Timestamp type
 
-    t1: string;
-    t2: string;
+    ident1: string;
+    ident2: string;
 
     text1: string;
     text2: string;

@@ -1,0 +1,132 @@
+<form [formGroup]="matchForm" *ngIf="loadStatus.loadSuccess">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="card mt-1">
+                <div class="card-header">
+                    Match
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="matchNo">Match No</label>
+                        <input type="number" class="form-control" id="matchNo" formControlName="matchNo" />
+                        <div *ngIf="matchNo.invalid" class="invalid-feedback">
+                            matchNo must be set
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="start">Start</label>
+                        <input type="text" class="form-control" id="start" formControlName="start" />
+                        <div *ngIf="startTime.invalid" class="invalid-feedback">
+                            Starr must be set
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ageClass">Age Class</label>
+                        <select class="form-control" id="ageClass" formControlName="ageClass" [ngClass]="{ 'is-invalid': ageClassInvalid }">
+                            <option value="null" selected>-- Choose --</option>
+                            <option *ngFor="let sp of ageClasses" [ngValue]="sp">{{ sp.name }}</option>
+                        </select>
+                        <div *ngIf="ageClass.invalid" class="invalid-feedback">
+                            Age class must be set
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group">Group</label>
+                        <select class="form-control" id="group" formControlName="group">
+                            <option value="null" selected>-- Choose --</option>
+                            <option *ngFor="let r of filteredGroups" [ngValue]="r">{{ r.name }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ident1">Ident 1</label>
+                        <input type="text" class="form-control" id="ident1" formControlName="ident1" />
+                        <div *ngIf="ident1.invalid" class="invalid-feedback">
+                            Ident must be valid
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ident2">Ident 2</label>
+                        <input type="text" class="form-control" id="ident2" formControlName="ident2" />
+                        <div *ngIf="ident2.invalid" class="invalid-feedback">
+                            Ident must be valid
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group1">Group 1</label>
+                        <select class="form-control" id="group1" formControlName="group1">
+                            <option value="null" selected>-- Choose --</option>
+                            <option *ngFor="let r of filteredGroups" [ngValue]="r">{{ r.name }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group1Rank">Rank 1</label>
+                        <input type="number" class="form-control" id="group1Rank" formControlName="group1Rank" />
+                        <div *ngIf="group1Rank.invalid" class="invalid-feedback">
+                            Rank must be valid
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group2">Group 2</label>
+                        <select class="form-control" id="group2" formControlName="group2">
+                            <option value="null" selected>-- Choose --</option>
+                            <option *ngFor="let r of filteredGroups" [ngValue]="r">{{ r.name }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group1Rank">Rank 2</label>
+                        <input type="number" class="form-control" id="group2Rank" formControlName="group2Rank" />
+                        <div *ngIf="group2Rank.invalid" class="invalid-feedback">
+                            Rank must be valid
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="match1">Match 1</label>
+                        <select class="form-control" id="match1" formControlName="match1">
+                            <option value="null" selected>-- Choose --</option>
+                            <option *ngFor="let r of filteredMatches" [ngValue]="r">{{ r.matchNo }} {{ r.description }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="match2">Match 2</label>
+                        <select class="form-control" id="match2" formControlName="match2">
+                            <option value="null" selected>-- Choose --</option>
+                            <option *ngFor="let r of filteredMatches" [ngValue]="r">{{ r.matchNo }} {{ r.description }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text1">Text 1</label>
+                        <input type="number" class="form-control" id="text1" formControlName="text1" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text2">Text 2</label>
+                        <input type="number" class="form-control" id="text2" formControlName="text2" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="number" class="form-control" id="description" formControlName="description" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col-12">
+            <button class="btn btn-primary" [disabled]="disableSave" (click)="save()">Save</button>
+        </div>
+    </div>
+</form>
