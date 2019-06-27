@@ -1,3 +1,7 @@
-<p>
-  admin-matches-page works!
-</p>
+<div *ngFor="let match of matches">
+    <app-admin-match-line [match]="match"></app-admin-match-line>
+</div>
+
+<hr/>
+
+<a class="btn btn-primary" routerLink="../match-new">New match</a>

@@ -149,6 +149,7 @@ export class Match {
 }
 
 export interface MatchDao {
+    matchNo: number;
     ageClassId: string;
     groupId: string;
     teamId1: string;

@@ -11,6 +11,7 @@ import { AdminTeamLineComponent } from './admin-team-line/admin-team-line.compon
 import { AdminTeamNewComponent } from './admin-team-new/admin-team-new.component';
 import { AdminTeamViewComponent } from './admin-team-view/admin-team-view.component';
 import { AdminTeamsPageComponent } from './admin-teams-page/admin-teams-page.component';
+import { AdminMatchLineComponent } from './admin-match-line/admin-match-line.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { AdminTeamsPageComponent } from './admin-teams-page/admin-teams-page.com
         AdminMatchNewComponent,
         AdminMatchEditComponent,
         AdminTeamViewComponent,
-        AdminTeamLineComponent
+        AdminTeamLineComponent,
+        AdminMatchLineComponent
     ],
     imports: [CommonModule, AdminRoutingModule, ReactiveFormsModule, SharedModule]
 })

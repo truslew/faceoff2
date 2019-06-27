@@ -1,0 +1,28 @@
+<div class="row my-2 ">
+    <div class="col-1 align-self-center">
+        <a class="btn btn-primary" [routerLink]="['../team-edit', match.id]">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </a>
+    </div>
+    <!-- <div class="col-1 align-self-center">
+        {{ match.id }}
+    </div> -->
+    <div class="col-1 align-self-center">
+        {{ match.matchNo }}
+    </div>
+    <div class="col-2 align-self-center">
+        {{ start }}
+    </div>
+    <div class="col-1 align-self-center">
+        {{ match.ageClassId }}
+    </div>
+    <div class="col-1 align-self-center">
+        {{ match.groupId }}
+    </div>
+    <div class="col-1 align-self-center">
+        {{ match.t1 }}
+    </div>
+    <div class="col-1 align-self-center">
+        {{ match.t2 }}
+    </div>
+</div>
