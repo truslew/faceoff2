@@ -15,7 +15,7 @@ export class AdminTeamEditComponent extends TakeUntilBase implements OnInit {
 
 
     constructor(private teamService: TeamsService, private route: ActivatedRoute, private router: Router) {
-        super()
+        super();
     }
 
     ngOnInit() {
